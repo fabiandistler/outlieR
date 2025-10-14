@@ -117,12 +117,14 @@
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/detect_outliers.html">detect_outliers</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ Preprocessing data...</span></span>
 <span><span class="co">#&gt; ℹ Tuning hyperparameters using grid search...</span></span>
-<span><span class="co">#&gt; ℹ Testing 16 parameter combinations...</span></span>
+<span><span class="co">#&gt; ℹ Testing 675 parameter combinations...</span></span>
 <span><span class="co">#&gt; ✔ Best parameters found:</span></span>
-<span><span class="co">#&gt; • ntrees: 100</span></span>
-<span><span class="co">#&gt; • sample_size: 32</span></span>
-<span><span class="co">#&gt; • max_depth: 12</span></span>
 <span><span class="co">#&gt; • ndim: 2</span></span>
+<span><span class="co">#&gt; • ntrees: 300</span></span>
+<span><span class="co">#&gt; • prob_pick_avg_gain: 0</span></span>
+<span><span class="co">#&gt; • prob_pick_pooled_gain: 0</span></span>
+<span><span class="co">#&gt; • ntry: 1</span></span>
+<span><span class="co">#&gt; • sample_size: 32</span></span>
 <span><span class="co">#&gt; ℹ Training isolation forest model...</span></span>
 <span><span class="co">#&gt; ℹ Computing anomaly scores...</span></span>
 <span><span class="co">#&gt; ✔ Detected 4 outliers (12.5% of data)</span></span>
@@ -135,25 +137,25 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model Configuration:</span></span>
 <span><span class="co">#&gt;   - Algorithm: Isolation Forest (isotree)</span></span>
-<span><span class="co">#&gt;   - Number of trees: 100 </span></span>
+<span><span class="co">#&gt;   - Number of trees: 300 </span></span>
 <span><span class="co">#&gt;   - Sample size: 32 </span></span>
-<span><span class="co">#&gt;   - Max depth: 12 </span></span>
+<span><span class="co">#&gt;   - Max depth: auto </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Detection Summary:</span></span>
 <span><span class="co">#&gt;   - Total observations: 32 </span></span>
 <span><span class="co">#&gt;   - Outliers detected: 4 ( 12.5 %)</span></span>
-<span><span class="co">#&gt;   - Anomaly score threshold: 8.1405 </span></span>
+<span><span class="co">#&gt;   - Anomaly score threshold: 7.6925 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Performance Metrics:</span></span>
-<span><span class="co">#&gt;   - mean_score : 6.5564 </span></span>
-<span><span class="co">#&gt;   - median_score : 6.7492 </span></span>
-<span><span class="co">#&gt;   - sd_score : 1.2908 </span></span>
-<span><span class="co">#&gt;   - min_score : 3.91 </span></span>
-<span><span class="co">#&gt;   - max_score : 8.4067 </span></span>
-<span><span class="co">#&gt;   - mean_outlier_score : 8.2838 </span></span>
-<span><span class="co">#&gt;   - mean_normal_score : 6.3096 </span></span>
-<span><span class="co">#&gt;   - cohens_d : 2.3444 </span></span>
-<span><span class="co">#&gt;   - outlier_separation : 1.5295 </span></span>
+<span><span class="co">#&gt;   - mean_score : 6.5543 </span></span>
+<span><span class="co">#&gt;   - median_score : 6.9225 </span></span>
+<span><span class="co">#&gt;   - sd_score : 1.0995 </span></span>
+<span><span class="co">#&gt;   - min_score : 4.039 </span></span>
+<span><span class="co">#&gt;   - max_score : 7.9759 </span></span>
+<span><span class="co">#&gt;   - mean_outlier_score : 7.8597 </span></span>
+<span><span class="co">#&gt;   - mean_normal_score : 6.3678 </span></span>
+<span><span class="co">#&gt;   - cohens_d : 2.0018 </span></span>
+<span><span class="co">#&gt;   - outlier_separation : 1.3569 </span></span>
 <span><span class="co">#&gt;   - detection_rate : 0.125 </span></span>
 <span><span class="co">#&gt;   - expected_contamination : 0.1 </span></span>
 <span><span class="co">#&gt;   - actual_contamination : 0.125 </span></span>
@@ -166,25 +168,25 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model Configuration:</span></span>
 <span><span class="co">#&gt;   - Algorithm: Isolation Forest (isotree)</span></span>
-<span><span class="co">#&gt;   - Number of trees: 100 </span></span>
+<span><span class="co">#&gt;   - Number of trees: 300 </span></span>
 <span><span class="co">#&gt;   - Sample size: 32 </span></span>
-<span><span class="co">#&gt;   - Max depth: 12 </span></span>
+<span><span class="co">#&gt;   - Max depth: auto </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Detection Summary:</span></span>
 <span><span class="co">#&gt;   - Total observations: 32 </span></span>
 <span><span class="co">#&gt;   - Outliers detected: 4 ( 12.5 %)</span></span>
-<span><span class="co">#&gt;   - Anomaly score threshold: 8.1405 </span></span>
+<span><span class="co">#&gt;   - Anomaly score threshold: 7.6925 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Performance Metrics:</span></span>
-<span><span class="co">#&gt;   - mean_score : 6.5564 </span></span>
-<span><span class="co">#&gt;   - median_score : 6.7492 </span></span>
-<span><span class="co">#&gt;   - sd_score : 1.2908 </span></span>
-<span><span class="co">#&gt;   - min_score : 3.91 </span></span>
-<span><span class="co">#&gt;   - max_score : 8.4067 </span></span>
-<span><span class="co">#&gt;   - mean_outlier_score : 8.2838 </span></span>
-<span><span class="co">#&gt;   - mean_normal_score : 6.3096 </span></span>
-<span><span class="co">#&gt;   - cohens_d : 2.3444 </span></span>
-<span><span class="co">#&gt;   - outlier_separation : 1.5295 </span></span>
+<span><span class="co">#&gt;   - mean_score : 6.5543 </span></span>
+<span><span class="co">#&gt;   - median_score : 6.9225 </span></span>
+<span><span class="co">#&gt;   - sd_score : 1.0995 </span></span>
+<span><span class="co">#&gt;   - min_score : 4.039 </span></span>
+<span><span class="co">#&gt;   - max_score : 7.9759 </span></span>
+<span><span class="co">#&gt;   - mean_outlier_score : 7.8597 </span></span>
+<span><span class="co">#&gt;   - mean_normal_score : 6.3678 </span></span>
+<span><span class="co">#&gt;   - cohens_d : 2.0018 </span></span>
+<span><span class="co">#&gt;   - outlier_separation : 1.3569 </span></span>
 <span><span class="co">#&gt;   - detection_rate : 0.125 </span></span>
 <span><span class="co">#&gt;   - expected_contamination : 0.1 </span></span>
 <span><span class="co">#&gt;   - actual_contamination : 0.125 </span></span>
@@ -195,44 +197,44 @@
 <span><span class="co">#&gt; Top 10 Outliers:</span></span>
 <span><span class="co">#&gt;    row_id anomaly_score n_outlier_features</span></span>
 <span><span class="co">#&gt;     &lt;int&gt;         &lt;num&gt;              &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1:     23      8.406667                  0</span></span>
-<span><span class="co">#&gt; 2:     12      8.296667                  0</span></span>
-<span><span class="co">#&gt; 3:     14      8.290000                  0</span></span>
-<span><span class="co">#&gt; 4:      3      8.141667                  0</span></span>
+<span><span class="co">#&gt; 1:     23      7.975920                  0</span></span>
+<span><span class="co">#&gt; 2:     12      7.886702                  0</span></span>
+<span><span class="co">#&gt; 3:     14      7.871458                  0</span></span>
+<span><span class="co">#&gt; 4:      5      7.704758                  0</span></span>
 <span></span>
 <span><span class="co"># Extract outlier details</span></span>
 <span><span class="va">outlier_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_outlier_summary.html">get_outlier_summary</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">outlier_summary</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    row_id anomaly_score is_outlier feat_score_mpg feat_score_cyl</span></span>
 <span><span class="co">#&gt;     &lt;int&gt;         &lt;num&gt;     &lt;lgcl&gt;          &lt;num&gt;          &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:     23      8.406667       TRUE      0.7391680      0.6744908</span></span>
-<span><span class="co">#&gt; 2:     12      8.296667       TRUE      0.5174176      0.6744908</span></span>
-<span><span class="co">#&gt; 3:     14      8.290000       TRUE      0.7391680      0.6744908</span></span>
-<span><span class="co">#&gt; 4:      3      8.141667       TRUE      0.6652512      0.6744908</span></span>
+<span><span class="co">#&gt; 1:     23      7.975920       TRUE     0.73916796      0.6744908</span></span>
+<span><span class="co">#&gt; 2:     12      7.886702       TRUE     0.51741757      0.6744908</span></span>
+<span><span class="co">#&gt; 3:     14      7.871458       TRUE     0.73916796      0.6744908</span></span>
+<span><span class="co">#&gt; 4:      5      7.704758       TRUE     0.09239599      0.6744908</span></span>
 <span><span class="co">#&gt;    feat_score_disp feat_score_hp feat_score_drat feat_score_wt feat_score_qsec</span></span>
 <span><span class="co">#&gt;              &lt;num&gt;         &lt;num&gt;           &lt;num&gt;         &lt;num&gt;           &lt;num&gt;</span></span>
 <span><span class="co">#&gt; 1:       0.7666771     0.3502164       0.7738894     0.1433700       0.2895719</span></span>
 <span><span class="co">#&gt; 2:       0.5659316     0.7393456       0.8874878     0.9710060       0.2189446</span></span>
 <span><span class="co">#&gt; 3:       0.5659316     0.7393456       0.8874878     0.5930305       0.2048192</span></span>
-<span><span class="co">#&gt; 4:       0.6285756     0.3891293       0.2200970     1.3098806       0.6356457</span></span>
+<span><span class="co">#&gt; 4:       1.1653207     0.6744908       0.7738894     0.1498868       0.4873284</span></span>
 <span><span class="co">#&gt;    feat_score_vs feat_score_am feat_score_gear feat_score_carb</span></span>
 <span><span class="co">#&gt;            &lt;num&gt;         &lt;num&gt;           &lt;num&gt;           &lt;num&gt;</span></span>
 <span><span class="co">#&gt; 1:             0             0       0.6744908       0.0000000</span></span>
 <span><span class="co">#&gt; 2:             0             0       0.6744908       0.6744908</span></span>
 <span><span class="co">#&gt; 3:             0             0       0.6744908       0.6744908</span></span>
-<span><span class="co">#&gt; 4:             0             0       0.0000000       0.6744908</span></span>
+<span><span class="co">#&gt; 4:             0             0       0.6744908       0.0000000</span></span>
 <span><span class="co">#&gt;    n_outlier_features top_outlier_features   mpg   cyl  disp    hp  drat    wt</span></span>
 <span><span class="co">#&gt;                 &lt;int&gt;               &lt;char&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span></span>
 <span><span class="co">#&gt; 1:                  0      drat, disp, mpg  15.2     8 304.0   150  3.15 3.435</span></span>
 <span><span class="co">#&gt; 2:                  0         wt, drat, hp  16.4     8 275.8   180  3.07 4.070</span></span>
 <span><span class="co">#&gt; 3:                  0        drat, hp, mpg  15.2     8 275.8   180  3.07 3.780</span></span>
-<span><span class="co">#&gt; 4:                  0        wt, cyl, carb  22.8     4 108.0    93  3.85 2.320</span></span>
+<span><span class="co">#&gt; 4:                  0      disp, drat, cyl  18.7     8 360.0   175  3.15 3.440</span></span>
 <span><span class="co">#&gt;     qsec    vs    am  gear  carb</span></span>
 <span><span class="co">#&gt;    &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span></span>
 <span><span class="co">#&gt; 1: 17.30     0     0     3     2</span></span>
 <span><span class="co">#&gt; 2: 17.40     0     0     3     3</span></span>
 <span><span class="co">#&gt; 3: 18.00     0     0     3     3</span></span>
-<span><span class="co">#&gt; 4: 18.61     1     1     4     1</span></span>
+<span><span class="co">#&gt; 4: 17.02     0     0     3     2</span></span>
 <span></span>
 <span><span class="co"># Create visualizations</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span>, type <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span> <span class="co"># Score distribution</span></span></code></pre></div>
@@ -256,24 +258,7 @@
 <span>  data <span class="op">=</span> <span class="va">iris</span>,</span>
 <span>  target_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span>, <span class="st">"Petal.Length"</span><span class="op">)</span>,</span>
 <span>  contamination <span class="op">=</span> <span class="fl">0.05</span> <span class="co"># Expect 5% outliers</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Preprocessing data...</span></span>
-<span><span class="co">#&gt; ℹ Tuning hyperparameters using grid search...</span></span>
-<span><span class="co">#&gt; ℹ Testing 16 parameter combinations...</span></span>
-<span><span class="co">#&gt; ✔ Best parameters found:</span></span>
-<span><span class="co">#&gt; • ntrees: 100</span></span>
-<span><span class="co">#&gt; • sample_size: 150</span></span>
-<span><span class="co">#&gt; • max_depth: 12</span></span>
-<span><span class="co">#&gt; • ndim: 1</span></span>
-<span><span class="co">#&gt; ℹ Training isolation forest model...</span></span>
-<span><span class="co">#&gt; Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =</span></span>
-<span><span class="co">#&gt; 500, : Passed parameters for deterministic single-variable splits with no</span></span>
-<span><span class="co">#&gt; sub-sampling. Every tree fitted will end up doing exactly the same splits. It's</span></span>
-<span><span class="co">#&gt; recommended to set non-random split probabilities to less than 1, or to use the</span></span>
-<span><span class="co">#&gt; extended model (ndim &gt; 1).</span></span>
-<span><span class="co">#&gt; ℹ Computing anomaly scores...</span></span>
-<span><span class="co">#&gt; ✔ Detected 8 outliers (5.33% of data)</span></span>
-<span><span class="co">#&gt; ✔ Outlier detection complete!</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="id_2-without-automatic-tuning">2. Without automatic tuning<a class="anchor" aria-label="anchor" href="#id_2-without-automatic-tuning"></a>
@@ -286,20 +271,7 @@
 <span>  n_trees <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  max_depth <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>  sample_size <span class="op">=</span> <span class="fl">512</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Preprocessing data...</span></span>
-<span><span class="co">#&gt; ℹ Training isolation forest model...</span></span>
-<span><span class="co">#&gt; Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =</span></span>
-<span><span class="co">#&gt; 500, : 'sample_size' is larger than the number of rows in 'data', will be</span></span>
-<span><span class="co">#&gt; decreased.</span></span>
-<span><span class="co">#&gt; Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =</span></span>
-<span><span class="co">#&gt; 500, : Passed parameters for deterministic single-variable splits with no</span></span>
-<span><span class="co">#&gt; sub-sampling. Every tree fitted will end up doing exactly the same splits. It's</span></span>
-<span><span class="co">#&gt; recommended to set non-random split probabilities to less than 1, or to use the</span></span>
-<span><span class="co">#&gt; extended model (ndim &gt; 1).</span></span>
-<span><span class="co">#&gt; ℹ Computing anomaly scores...</span></span>
-<span><span class="co">#&gt; ✔ Detected 4 outliers (12.5% of data)</span></span>
-<span><span class="co">#&gt; ✔ Outlier detection complete!</span></span></code></pre></div>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="id_3-different-tuning-methods">3. Different tuning methods<a class="anchor" aria-label="anchor" href="#id_3-different-tuning-methods"></a>
@@ -326,43 +298,17 @@
 <span>  category <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span><span class="op">)</span>, <span class="fl">100</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/detect_outliers.html">detect_outliers</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Preprocessing data...</span></span>
-<span><span class="co">#&gt; ℹ Encoding 1 categorical column...</span></span>
-<span><span class="co">#&gt; ℹ Tuning hyperparameters using grid search...</span></span>
-<span><span class="co">#&gt; ℹ Testing 16 parameter combinations...</span></span>
-<span><span class="co">#&gt; ✔ Best parameters found:</span></span>
-<span><span class="co">#&gt; • ntrees: 200</span></span>
-<span><span class="co">#&gt; • sample_size: 100</span></span>
-<span><span class="co">#&gt; • max_depth: 12</span></span>
-<span><span class="co">#&gt; • ndim: 2</span></span>
-<span><span class="co">#&gt; ℹ Training isolation forest model...</span></span>
-<span><span class="co">#&gt; ℹ Computing anomaly scores...</span></span>
-<span><span class="co">#&gt; ✔ Detected 10 outliers (10% of data)</span></span>
-<span><span class="co">#&gt; ✔ Outlier detection complete!</span></span></code></pre></div>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/detect_outliers.html">detect_outliers</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="id_5-detailed-outlier-analysis">5. Detailed outlier analysis<a class="anchor" aria-label="anchor" href="#id_5-detailed-outlier-analysis"></a>
 </h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/detect_outliers.html">detect_outliers</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ℹ Preprocessing data...</span></span>
-<span><span class="co">#&gt; ℹ Tuning hyperparameters using grid search...</span></span>
-<span><span class="co">#&gt; ℹ Testing 16 parameter combinations...</span></span>
-<span><span class="co">#&gt; ✔ Best parameters found:</span></span>
-<span><span class="co">#&gt; • ntrees: 100</span></span>
-<span><span class="co">#&gt; • sample_size: 32</span></span>
-<span><span class="co">#&gt; • max_depth: 12</span></span>
-<span><span class="co">#&gt; • ndim: 2</span></span>
-<span><span class="co">#&gt; ℹ Training isolation forest model...</span></span>
-<span><span class="co">#&gt; ℹ Computing anomaly scores...</span></span>
-<span><span class="co">#&gt; ✔ Detected 4 outliers (12.5% of data)</span></span>
-<span><span class="co">#&gt; ✔ Outlier detection complete!</span></span>
 <span></span>
 <span><span class="co"># Which features are suspicious in row 31?</span></span>
 <span><span class="va">detailed</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_outlier_summary.html">get_outlier_summary</a></span><span class="op">(</span><span class="va">result</span>, detailed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">detailed</span><span class="op">[</span><span class="va">row_id</span> <span class="op">==</span> <span class="fl">31</span><span class="op">]</span></span>
-<span><span class="co">#&gt; Empty data.table (0 rows and 27 cols): row_id,anomaly_score,is_outlier,feat_score_mpg,feat_score_cyl,feat_score_disp...</span></span></code></pre></div>
+<span><span class="va">detailed</span><span class="op">[</span><span class="va">row_id</span> <span class="op">==</span> <span class="fl">31</span><span class="op">]</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
