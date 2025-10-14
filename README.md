@@ -1,21 +1,10 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # outlieR
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 # outlieR <img src="man/figures/logo.png" align="right" height="139" />
@@ -23,25 +12,32 @@ knitr::opts_chunk$set(
 > Automatic Outlier Detection Using Isolation Forests
 
 [![R-CMD-check](https://github.com/yourusername/outlieR/workflows/R-CMD-check/badge.svg)](https://github.com/yourusername/outlieR/actions)
-[![Codecov test coverage](https://codecov.io/gh/yourusername/outlieR/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/outlieR?branch=main)
-[![CRAN status](https://www.r-pkg.org/badges/version/outlieR)](https://CRAN.R-project.org/package=outlieR)
+[![Codecov test
+coverage](https://codecov.io/gh/yourusername/outlieR/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/outlieR?branch=main)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/outlieR)](https://CRAN.R-project.org/package=outlieR)
 
 ## Übersicht
 
-`outlieR` bietet eine einfache, leistungsstarke API zur automatischen Erkennung von Ausreißern in tabellarischen Daten. Das Package nutzt Isolation Forests (via `isotree`) mit automatischem Hyperparameter-Tuning und liefert detaillierte Diagnosen auf Feature-Ebene.
+`outlieR` bietet eine einfache, leistungsstarke API zur automatischen
+Erkennung von Ausreißern in tabellarischen Daten. Das Package nutzt
+Isolation Forests (via `isotree`) mit automatischem
+Hyperparameter-Tuning und liefert detaillierte Diagnosen auf
+Feature-Ebene.
 
 ### Hauptfeatures
 
-✨ **Einfache API** - Eine Funktion für die meisten Anwendungsfälle
-🎯 **Automatisches Tuning** - Grid Search, Random Search oder Bayesian Optimization  
-📊 **Detaillierte Diagnostik** - Feature-Level Outlier-Analyse
-📈 **Umfangreiche Visualisierungen** - Score-Plots, Feature Importance, PCA-Projektion
-⚡ **data.table Design** - Effiziente Datenverarbeitung
+✨ **Einfache API** - Eine Funktion für die meisten Anwendungsfälle 🎯
+**Automatisches Tuning** - Grid Search, Random Search oder Bayesian
+Optimization  
+📊 **Detaillierte Diagnostik** - Feature-Level Outlier-Analyse 📈
+**Umfangreiche Visualisierungen** - Score-Plots, Feature Importance,
+PCA-Projektion ⚡ **data.table Design** - Effiziente Datenverarbeitung
 🔧 **Flexibel** - Unterstützt numerische und kategoriale Variablen
 
 ## Installation
 
-```r
+``` r
 # Von GitHub installieren (Development Version)
 # install.packages("remotes")
 remotes::install_github("yourusername/outlieR")
@@ -52,7 +48,7 @@ remotes::install_github("yourusername/outlieR")
 
 ## Quick Start
 
-```r
+``` r
 library(outlieR)
 
 # Basis-Verwendung: Automatische Outlier-Erkennung
@@ -77,7 +73,7 @@ plot(result, type = "all")         # Alle Plots
 
 ### 1. Spezifische Spalten analysieren
 
-```r
+``` r
 # Nur ausgewählte Variablen verwenden
 result <- detect_outliers(
   data = iris,
@@ -88,7 +84,7 @@ result <- detect_outliers(
 
 ### 2. Ohne automatisches Tuning
 
-```r
+``` r
 # Manuelle Parameter-Spezifikation für mehr Kontrolle
 result <- detect_outliers(
   data = mtcars,
@@ -101,7 +97,7 @@ result <- detect_outliers(
 
 ### 3. Verschiedene Tuning-Methoden
 
-```r
+``` r
 # Grid Search (default, systematisch aber langsamer)
 result_grid <- detect_outliers(mtcars, tune_method = "grid")
 
@@ -114,7 +110,7 @@ result_bayes <- detect_outliers(mtcars, tune_method = "bayesian")
 
 ### 4. Mit kategorischen Variablen
 
-```r
+``` r
 # Automatische One-Hot-Encoding von Faktoren
 data <- data.frame(
   value1 = rnorm(100),
@@ -127,7 +123,7 @@ result <- detect_outliers(data)
 
 ### 5. Detaillierte Outlier-Analyse
 
-```r
+``` r
 result <- detect_outliers(mtcars)
 
 # Welche Zeile ist ein Outlier?
@@ -144,7 +140,7 @@ detailed[row_id == 31]
 
 ## Workflow-Beispiel: Komplette Analyse
 
-```r
+``` r
 library(outlieR)
 library(data.table)
 
@@ -188,29 +184,25 @@ outlier_dt[is_outlier == TRUE, .N, by = n_outlier_features]
 
 Hauptfunktion zur Outlier-Erkennung.
 
-**Parameter:**
-- `data`: data.frame oder data.table mit den Daten
-- `target_cols`: Character-Vektor mit Spaltennamen (NULL = alle numerischen)
-- `contamination`: Erwarteter Outlier-Anteil (0-1, default: 0.1)
-- `tune`: Soll automatisches Tuning durchgeführt werden? (default: TRUE)
-- `tune_method`: "grid", "random", oder "bayesian" (default: "grid")
-- `n_trees`: Anzahl Bäume im Isolation Forest (default: 100)
-- `sample_size`: Sample-Größe pro Baum (default: "auto")
-- `max_depth`: Maximale Baumtiefe (default: "auto")
-- `seed`: Random Seed für Reproduzierbarkeit
-- `parallel`: Parallele Verarbeitung beim Tuning? (default: TRUE)
-- `verbose`: Progress-Meldungen anzeigen? (default: TRUE)
+**Parameter:** - `data`: data.frame oder data.table mit den Daten -
+`target_cols`: Character-Vektor mit Spaltennamen (NULL = alle
+numerischen) - `contamination`: Erwarteter Outlier-Anteil (0-1, default:
+0.1) - `tune`: Soll automatisches Tuning durchgeführt werden? (default:
+TRUE) - `tune_method`: “grid”, “random”, oder “bayesian” (default:
+“grid”) - `n_trees`: Anzahl Bäume im Isolation Forest (default: 100) -
+`sample_size`: Sample-Größe pro Baum (default: “auto”) - `max_depth`:
+Maximale Baumtiefe (default: “auto”) - `seed`: Random Seed für
+Reproduzierbarkeit - `parallel`: Parallele Verarbeitung beim Tuning?
+(default: TRUE) - `verbose`: Progress-Meldungen anzeigen? (default:
+TRUE)
 
-**Rückgabewert:**
-Objekt der Klasse `outlier_detector` mit:
-- `model`: Trainiertes isotree-Modell
-- `scores`: Anomaly Scores für jede Beobachtung
-- `outliers`: Logischer Vektor mit Outlier-Status
-- `outlier_details`: data.table mit detaillierter Feature-Analyse
-- `threshold`: Verwendeter Score-Threshold
-- `params`: Verwendete Modell-Parameter
-- `metrics`: Performance-Metriken
-- `preprocessing`: Informationen zur Daten-Vorverarbeitung
+**Rückgabewert:** Objekt der Klasse `outlier_detector` mit: - `model`:
+Trainiertes isotree-Modell - `scores`: Anomaly Scores für jede
+Beobachtung - `outliers`: Logischer Vektor mit Outlier-Status -
+`outlier_details`: data.table mit detaillierter Feature-Analyse -
+`threshold`: Verwendeter Score-Threshold - `params`: Verwendete
+Modell-Parameter - `metrics`: Performance-Metriken - `preprocessing`:
+Informationen zur Daten-Vorverarbeitung
 
 ### Hilfsfunktionen
 
@@ -220,19 +212,17 @@ Extrahiert Outlier-Zusammenfassung aus Ergebnisobjekt.
 
 #### `plot(x, type = "score", n_top = 10, ...)`
 
-Erstellt Visualisierungen. Typen:
-- `"score"`: Score-Verteilung über alle Beobachtungen
-- `"features"`: Feature Importance für Outliers
-- `"distribution"`: Histogramm der Scores nach Klasse
-- `"pca"`: PCA-Projektion mit Outlier-Markierung
-- `"heatmap"`: Feature-Score-Heatmap für Top-Outliers
-- `"all"`: Alle Plots kombiniert
+Erstellt Visualisierungen. Typen: - `"score"`: Score-Verteilung über
+alle Beobachtungen - `"features"`: Feature Importance für Outliers -
+`"distribution"`: Histogramm der Scores nach Klasse - `"pca"`:
+PCA-Projektion mit Outlier-Markierung - `"heatmap"`:
+Feature-Score-Heatmap für Top-Outliers - `"all"`: Alle Plots kombiniert
 
 ## Design-Prinzipien
 
 ### data.table-Stil
 
-```r
+``` r
 # Effiziente Operationen mit data.table
 result <- detect_outliers(your_data)
 dt <- data.table::as.data.table(result$outlier_details)
@@ -251,7 +241,7 @@ dt[, .N, by = .(is_outlier, n_outlier_features)]
 
 ## Performance
 
-```r
+``` r
 # Benchmark auf verschiedenen Datengrößen
 library(bench)
 
@@ -274,7 +264,7 @@ mark(detect_outliers(medium_data, tune = TRUE, tune_method = "random"))
 
 ### Custom-Threshold
 
-```r
+``` r
 result <- detect_outliers(mtcars, contamination = 0.05)
 
 # Eigenen Threshold verwenden
@@ -288,7 +278,7 @@ result$threshold <- custom_threshold
 
 ### Integration mit anderen Packages
 
-```r
+``` r
 # Mit data.table Workflows
 library(data.table)
 dt <- as.data.table(mtcars)
@@ -311,7 +301,7 @@ ggplot(plot_data, aes(x = index, y = score, color = outlier)) +
 
 ### Zu viele/wenige Outliers
 
-```r
+``` r
 # Contamination-Parameter anpassen
 result <- detect_outliers(data, contamination = 0.05)  # Weniger Outliers
 result <- detect_outliers(data, contamination = 0.15)  # Mehr Outliers
@@ -319,7 +309,7 @@ result <- detect_outliers(data, contamination = 0.15)  # Mehr Outliers
 
 ### Schlechte Trennung
 
-```r
+``` r
 # Mehr Bäume verwenden
 result <- detect_outliers(data, n_trees = 300)
 
@@ -329,7 +319,7 @@ result <- detect_outliers(data, tune = TRUE, tune_method = "random")
 
 ### Memory-Probleme bei großen Daten
 
-```r
+``` r
 # Paralleles Processing deaktivieren
 result <- detect_outliers(large_data, parallel = FALSE)
 
@@ -339,7 +329,8 @@ result <- detect_outliers(large_data, n_trees = 50, tune = FALSE)
 
 ## Roadmap
 
-- [ ] Support für mehr Tuning-Algorithmen (Bayesian Optimization vollständig)
+- [ ] Support für mehr Tuning-Algorithmen (Bayesian Optimization
+  vollständig)
 - [ ] Integration mit mlr3
 - [ ] Streaming-Outlier-Detection
 - [ ] Shapley-Values für Feature-Attribution
@@ -351,11 +342,13 @@ result <- detect_outliers(large_data, n_trees = 50, tune = FALSE)
 
 Contributions sind willkommen! Bitte:
 
-1. Fork das Repository
-2. Erstelle einen Feature-Branch (`git checkout -b feature/AmazingFeature`)
-3. Committe deine Änderungen (`git commit -m 'Add some AmazingFeature'`)
-4. Push zum Branch (`git push origin feature/AmazingFeature`)
-5. Öffne einen Pull Request
+1.  Fork das Repository
+2.  Erstelle einen Feature-Branch
+    (`git checkout -b feature/AmazingFeature`)
+3.  Committe deine Änderungen
+    (`git commit -m 'Add some AmazingFeature'`)
+4.  Push zum Branch (`git push origin feature/AmazingFeature`)
+5.  Öffne einen Pull Request
 
 ## Lizenz
 
@@ -363,7 +356,7 @@ MIT License - siehe [LICENSE](LICENSE) Datei für Details.
 
 ## Zitierung
 
-```bibtex
+``` bibtex
 @software{outlieR2024,
   author = {Distler, Fabian},
   title = {outlieR: Automatic Outlier Detection Using Isolation Forests},

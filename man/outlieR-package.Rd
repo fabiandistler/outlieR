@@ -4,12 +4,20 @@
 \name{outlieR-package}
 \alias{outlieR}
 \alias{outlieR-package}
-\title{outlieR: What the Package Does (One Line, Title Case)}
+\title{outlieR: Automatic Outlier Detection Using Isolation Forests}
 \description{
-What the package does (one paragraph).
+Provides automated outlier detection in tabular data using isolation forests (isotree package). Features include automatic hyperparameter tuning, detailed per-feature outlier analysis, comprehensive diagnostics, and rich visualizations. Designed with a simple, intuitive API following data.table design principles.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/fabiandistler/outlieR}
+  \item Report bugs at \url{https://github.com/fabiandistler/outlieR/issues}
+}
+
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com}
+\strong{Maintainer}: Fabian Distler \email{bully-jolt-cabana@duck.com}
 
 }
 \keyword{internal}
