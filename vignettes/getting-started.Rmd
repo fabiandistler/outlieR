@@ -107,7 +107,7 @@ get_outlier_summary(result_subset, detailed = FALSE)
 
 ## Automatic Hyperparameter Tuning
 
-```{r}
+```{r,eval=FALSE}
 # Grid Search (systematic, all combinations)
 result_grid <- detect_outliers(
   mtcars,
@@ -174,31 +174,6 @@ cat("Categorical columns:", result_mixed$preprocessing$categorical_cols, "\n")
 cat("Processed columns:", result_mixed$preprocessing$processed_cols, "\n")
 ```
 
-# data.table Integration
-
-`outlieR` is optimized for efficient work with `data.table`:
-
-```{r}
-library(data.table)
-
-# Work with data.table
-dt <- as.data.table(mtcars)
-result <- detect_outliers(dt, verbose = FALSE)
-
-# Add outlier flag to the table
-dt[, is_outlier := result$outliers]
-dt[, anomaly_score := result$scores]
-
-# Analyze outliers
-dt[is_outlier == TRUE, .SD, .SDcols = c("mpg", "cyl", "hp", "anomaly_score")]
-
-# Aggregations
-dt[, .(
-  mean_mpg = mean(mpg),
-  mean_hp = mean(hp),
-  count = .N
-), by = is_outlier]
-```
 
 # Practical Workflows
 
@@ -273,7 +248,7 @@ cat(sprintf("\nTotal removed: %d rows\n", cleaned$n_removed))
 ```{r}
 # Which features are most frequently flagged as outliers?
 analyze_feature_outliers <- function(result) {
-  dt <- as.data.table(result$outlier_details)
+  dt <- data.table::as.data.table(result$outlier_details)
 
   # Extract feature score columns
   score_cols <- grep("^feat_score_", names(dt), value = TRUE)
@@ -286,7 +261,7 @@ analyze_feature_outliers <- function(result) {
   feature_stats <- lapply(score_cols, function(col) {
     col_clean <- gsub("^feat_score_", "", col)
     scores <- dt[[col]]
-    data.table(
+    data.table::data.table(
       feature = col_clean,
       n_high_score = sum(scores > 3, na.rm = TRUE),
       mean_score = mean(scores, na.rm = TRUE),
@@ -294,13 +269,13 @@ analyze_feature_outliers <- function(result) {
     )
   })
 
-  feature_dt <- rbindlist(feature_stats)
+  feature_dt <- data.table::rbindlist(feature_stats)
   feature_dt[order(-n_high_score)]
 }
 
-result <- detect_outliers(mtcars, verbose = FALSE)
+result <- outlieR::detect_outliers(mtcars, verbose = FALSE)
 feature_analysis <- analyze_feature_outliers(result)
-head(feature_analysis, 10)
+utils::head(feature_analysis, 10)
 ```
 
 # Performance Tips
@@ -543,3 +518,4 @@ For more information, see:
 * `?detect_outliers` for full parameter documentation
 * [GitHub Issues](https://github.com/yourusername/outlieR/issues) for questions
 * [Vignettes](https://github.com/yourusername/outlieR/vignettes) for more examples
+
