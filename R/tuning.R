@@ -107,6 +107,7 @@ tune_grid_search <- function(data, param_space, contamination, parallel, verbose
 #'
 #' @keywords internal
 tune_random_search <- function(data, param_space, contamination, parallel, verbose) {
+  withr::local_seed(42)
   n_iterations <- 20
 
   if (verbose) {

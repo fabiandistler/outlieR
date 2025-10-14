@@ -60,11 +60,11 @@ print(result)
 ```{r}
 # Summary of outliers
 summary_dt <- get_outlier_summary(result, detailed = FALSE)
-head(summary_dt)
+utils::head(summary_dt)
 
 # Detailed information with feature scores
 detailed_dt <- get_outlier_summary(result, detailed = TRUE)
-head(detailed_dt, 3)
+utils::head(detailed_dt, 3)
 ```
 
 ## Visualizations

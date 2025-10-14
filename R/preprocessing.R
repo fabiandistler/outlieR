@@ -10,7 +10,6 @@
 #' @return List with processed data and preprocessing info
 #' @keywords internal
 prepare_data <- function(data, target_cols = NULL) {
-  # Convert to data.table for efficient processing
   dt <- data.table::as.data.table(data)
 
   # Select target columns

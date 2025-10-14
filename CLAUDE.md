@@ -174,7 +174,6 @@ Feature-level analysis is centralized in `generate_outlier_details()`:
 **Suggested:**
 - `testthat`: Testing framework
 
-Note: Package uses `dplyr` for `slice_head()` in `summary.outlier_detector()` but follows data.table style elsewhere per coding standards.
 
 ## Important Constraints
 

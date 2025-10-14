@@ -61,7 +61,7 @@ summary(result)
 
 # Extract outlier details
 outlier_summary <- get_outlier_summary(result)
-head(outlier_summary)
+utils::head(outlier_summary)
 
 # Create visualizations
 plot(result, type = "score") # Score distribution

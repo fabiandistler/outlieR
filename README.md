@@ -134,7 +134,7 @@ summary(result)
 
 # Extract outlier details
 outlier_summary <- get_outlier_summary(result)
-head(outlier_summary)
+utils::head(outlier_summary)
 #>    row_id anomaly_score is_outlier feat_score_mpg feat_score_cyl
 #>     <int>         <num>     <lgcl>          <num>          <num>
 #> 1:     23      8.406667       TRUE      0.7391680      0.6744908
