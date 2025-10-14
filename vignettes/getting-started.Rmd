@@ -49,7 +49,7 @@ The main function `detect_outliers()` makes it extremely easy to find outliers:
 
 ```{r}
 # Standard usage with mtcars dataset
-result <- detect_outliers(mtcars, verbose = FALSE)
+result <- detect_outliers(mtcars, verbose = FALSE, parallel = FALSE)
 
 # View result
 print(result)
@@ -93,14 +93,13 @@ plot(result, type = "pca")
 
 ## Analyze Specific Columns
 
-```{r}
+```{r,eval=FALSE}
 # Use only selected features
 result_subset <- detect_outliers(
   data = iris,
   target_cols = c("Sepal.Length", "Sepal.Width", "Petal.Length"),
   contamination = 0.05, # Expect 5% outliers
-  verbose = FALSE,
-  parallel = FALSE
+  verbose = FALSE
 )
 
 get_outlier_summary(result_subset, detailed = FALSE)
@@ -180,7 +179,7 @@ cat("Processed columns:", result_mixed$preprocessing$processed_cols, "\n")
 
 ## Workflow 1: Data Quality Check
 
-```{r}
+```{r,eval=FALSE}
 # Function for quick quality check
 quality_check <- function(data, contamination = 0.05) {
   result <- detect_outliers(
@@ -205,7 +204,7 @@ print(qc_result$top_outliers)
 
 ## Workflow 2: Iterative Cleaning
 
-```{r}
+```{r,eval=FALSE}
 # Iteratively remove outliers and reassess
 iterative_cleaning <- function(data, max_iterations = 3, contamination = 0.1) {
   clean_data <- data
@@ -246,7 +245,7 @@ cat(sprintf("\nTotal removed: %d rows\n", cleaned$n_removed))
 
 ## Workflow 3: Feature-Specific Analysis
 
-```{r}
+```{r, eval=FALSE}
 # Which features are most frequently flagged as outliers?
 analyze_feature_outliers <- function(result) {
   dt <- data.table::as.data.table(result$outlier_details)

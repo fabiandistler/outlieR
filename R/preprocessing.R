@@ -85,7 +85,7 @@ prepare_data <- function(data, target_cols = NULL) {
 
     for (col in cols_with_missing) {
       if (is.numeric(processed_data[[col]])) {
-        median_val <- median(processed_data[[col]], na.rm = TRUE)
+        median_val <- stats::median(processed_data[[col]], na.rm = TRUE)
         processed_data[is.na(get(col)), (col) := median_val]
       }
     }
@@ -173,8 +173,8 @@ generate_outlier_details <- function(data, prep_data, scores, outliers,
   feature_stats <- lapply(feature_names, function(feat) {
     col_values <- dt_processed[[feat]]
     list(
-      median = median(col_values, na.rm = TRUE),
-      mad = mad(col_values, na.rm = TRUE)
+      median = stats::median(col_values, na.rm = TRUE),
+      mad = stats::mad(col_values, na.rm = TRUE)
     )
   })
   names(feature_stats) <- feature_names
