@@ -60,9 +60,9 @@ test_that("detect_outliers handles missing values", {
 })
 
 test_that("detect_outliers validates inputs", {
-  expect_error(
+  expect_snapshot(
     detect_outliers(list(a = 1, b = 2)),
-    "data.frame or data.table"
+    error = TRUE
   )
 
   expect_error(
