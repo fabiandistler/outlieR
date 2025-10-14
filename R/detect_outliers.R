@@ -246,7 +246,7 @@ summary.outlier_detector <- function(object, ...) {
   print(object)
 
   cat("\nTop 10 Outliers:\n")
-  top_outliers <- get_outlier_summary(object, detailed = FALSE) %>%
+  top_outliers <- get_outlier_summary(object, detailed = FALSE) |>
     dplyr::slice_head(n = 10)
 
   print(top_outliers)

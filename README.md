@@ -7,15 +7,7 @@
 
 <!-- badges: end -->
 
-# outlieR <img src="man/figures/logo.png" align="right" height="139" />
-
 > Automatic Outlier Detection Using Isolation Forests
-
-[![R-CMD-check](https://github.com/yourusername/outlieR/workflows/R-CMD-check/badge.svg)](https://github.com/yourusername/outlieR/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/yourusername/outlieR/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/outlieR?branch=main)
-[![CRAN
-status](https://www.r-pkg.org/badges/version/outlieR)](https://CRAN.R-project.org/package=outlieR)
 
 ## Übersicht
 
@@ -32,15 +24,15 @@ Feature-Ebene.
 Optimization  
 📊 **Detaillierte Diagnostik** - Feature-Level Outlier-Analyse 📈
 **Umfangreiche Visualisierungen** - Score-Plots, Feature Importance,
-PCA-Projektion ⚡ **data.table Design** - Effiziente Datenverarbeitung
-🔧 **Flexibel** - Unterstützt numerische und kategoriale Variablen
+PCA-Projektion 🔧 **Flexibel** - Unterstützt numerische und kategoriale
+Variablen
 
 ## Installation
 
 ``` r
 # Von GitHub installieren (Development Version)
 # install.packages("remotes")
-remotes::install_github("yourusername/outlieR")
+remotes::install_github("fabiandistler/outlieR")
 
 # Von CRAN installieren (sobald verfügbar)
 # install.packages("outlieR")
@@ -53,21 +45,142 @@ library(outlieR)
 
 # Basis-Verwendung: Automatische Outlier-Erkennung
 result <- detect_outliers(mtcars)
+#> ℹ Preprocessing data...
+#> ℹ Tuning hyperparameters using grid search...
+#> ℹ Testing 16 parameter combinations...
+#> ✔ Best parameters found:
+#> • ntrees: 100
+#> • sample_size: 32
+#> • max_depth: 12
+#> • ndim: 2
+#> ℹ Training isolation forest model...
+#> ℹ Computing anomaly scores...
+#> ✔ Detected 4 outliers (12.5% of data)
+#> ✔ Outlier detection complete!
 
 # Ergebnisse anzeigen
 print(result)
+#> 
+#> === Outlier Detection Results ===
+#> 
+#> Model Configuration:
+#>   - Algorithm: Isolation Forest (isotree)
+#>   - Number of trees: 100 
+#>   - Sample size: 32 
+#>   - Max depth: 12 
+#> 
+#> Detection Summary:
+#>   - Total observations: 32 
+#>   - Outliers detected: 4 ( 12.5 %)
+#>   - Anomaly score threshold: 8.1405 
+#> 
+#> Performance Metrics:
+#>   - mean_score : 6.5564 
+#>   - median_score : 6.7492 
+#>   - sd_score : 1.2908 
+#>   - min_score : 3.91 
+#>   - max_score : 8.4067 
+#>   - mean_outlier_score : 8.2838 
+#>   - mean_normal_score : 6.3096 
+#>   - cohens_d : 2.3444 
+#>   - outlier_separation : 1.5295 
+#>   - detection_rate : 0.125 
+#>   - expected_contamination : 0.1 
+#>   - actual_contamination : 0.125 
+#> 
+#> Use plot() to visualize results
+#> Use get_outlier_summary() to see detailed outlier information
 summary(result)
+#> 
+#> === Outlier Detection Results ===
+#> 
+#> Model Configuration:
+#>   - Algorithm: Isolation Forest (isotree)
+#>   - Number of trees: 100 
+#>   - Sample size: 32 
+#>   - Max depth: 12 
+#> 
+#> Detection Summary:
+#>   - Total observations: 32 
+#>   - Outliers detected: 4 ( 12.5 %)
+#>   - Anomaly score threshold: 8.1405 
+#> 
+#> Performance Metrics:
+#>   - mean_score : 6.5564 
+#>   - median_score : 6.7492 
+#>   - sd_score : 1.2908 
+#>   - min_score : 3.91 
+#>   - max_score : 8.4067 
+#>   - mean_outlier_score : 8.2838 
+#>   - mean_normal_score : 6.3096 
+#>   - cohens_d : 2.3444 
+#>   - outlier_separation : 1.5295 
+#>   - detection_rate : 0.125 
+#>   - expected_contamination : 0.1 
+#>   - actual_contamination : 0.125 
+#> 
+#> Use plot() to visualize results
+#> Use get_outlier_summary() to see detailed outlier information
+#> 
+#> Top 10 Outliers:
+#>    row_id anomaly_score n_outlier_features
+#>     <int>         <num>              <int>
+#> 1:     23      8.406667                  0
+#> 2:     12      8.296667                  0
+#> 3:     14      8.290000                  0
+#> 4:      3      8.141667                  0
 
 # Outlier-Details extrahieren
 outlier_summary <- get_outlier_summary(result)
 head(outlier_summary)
+#>    row_id anomaly_score is_outlier feat_score_mpg feat_score_cyl
+#>     <int>         <num>     <lgcl>          <num>          <num>
+#> 1:     23      8.406667       TRUE      0.7391680      0.6744908
+#> 2:     12      8.296667       TRUE      0.5174176      0.6744908
+#> 3:     14      8.290000       TRUE      0.7391680      0.6744908
+#> 4:      3      8.141667       TRUE      0.6652512      0.6744908
+#>    feat_score_disp feat_score_hp feat_score_drat feat_score_wt feat_score_qsec
+#>              <num>         <num>           <num>         <num>           <num>
+#> 1:       0.7666771     0.3502164       0.7738894     0.1433700       0.2895719
+#> 2:       0.5659316     0.7393456       0.8874878     0.9710060       0.2189446
+#> 3:       0.5659316     0.7393456       0.8874878     0.5930305       0.2048192
+#> 4:       0.6285756     0.3891293       0.2200970     1.3098806       0.6356457
+#>    feat_score_vs feat_score_am feat_score_gear feat_score_carb
+#>            <num>         <num>           <num>           <num>
+#> 1:             0             0       0.6744908       0.0000000
+#> 2:             0             0       0.6744908       0.6744908
+#> 3:             0             0       0.6744908       0.6744908
+#> 4:             0             0       0.0000000       0.6744908
+#>    n_outlier_features top_outlier_features   mpg   cyl  disp    hp  drat    wt
+#>                 <int>               <char> <num> <num> <num> <num> <num> <num>
+#> 1:                  0      drat, disp, mpg  15.2     8 304.0   150  3.15 3.435
+#> 2:                  0         wt, drat, hp  16.4     8 275.8   180  3.07 4.070
+#> 3:                  0        drat, hp, mpg  15.2     8 275.8   180  3.07 3.780
+#> 4:                  0        wt, cyl, carb  22.8     4 108.0    93  3.85 2.320
+#>     qsec    vs    am  gear  carb
+#>    <num> <num> <num> <num> <num>
+#> 1: 17.30     0     0     3     2
+#> 2: 17.40     0     0     3     3
+#> 3: 18.00     0     0     3     3
+#> 4: 18.61     1     1     4     1
 
 # Visualisierungen erstellen
-plot(result, type = "score")       # Score-Verteilung
-plot(result, type = "features")    # Feature Importance
-plot(result, type = "pca")         # PCA-Projektion
-plot(result, type = "all")         # Alle Plots
+plot(result, type = "score") # Score-Verteilung
 ```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+``` r
+plot(result, type = "features") # Feature Importance
+```
+
+<img src="man/figures/README-unnamed-chunk-3-2.png" width="100%" />
+
+``` r
+plot(result, type = "pca") # PCA-Projektion
+```
+
+<img src="man/figures/README-unnamed-chunk-3-3.png" width="100%" />
 
 ## Detaillierte Beispiele
 
@@ -78,8 +191,25 @@ plot(result, type = "all")         # Alle Plots
 result <- detect_outliers(
   data = iris,
   target_cols = c("Sepal.Length", "Sepal.Width", "Petal.Length"),
-  contamination = 0.05  # Erwarte 5% Outliers
+  contamination = 0.05 # Erwarte 5% Outliers
 )
+#> ℹ Preprocessing data...
+#> ℹ Tuning hyperparameters using grid search...
+#> ℹ Testing 16 parameter combinations...
+#> ✔ Best parameters found:
+#> • ntrees: 100
+#> • sample_size: 150
+#> • max_depth: 12
+#> • ndim: 1
+#> ℹ Training isolation forest model...
+#> Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =
+#> 500, : Passed parameters for deterministic single-variable splits with no
+#> sub-sampling. Every tree fitted will end up doing exactly the same splits. It's
+#> recommended to set non-random split probabilities to less than 1, or to use the
+#> extended model (ndim > 1).
+#> ℹ Computing anomaly scores...
+#> ✔ Detected 8 outliers (5.33% of data)
+#> ✔ Outlier detection complete!
 ```
 
 ### 2. Ohne automatisches Tuning
@@ -93,6 +223,19 @@ result <- detect_outliers(
   max_depth = 12,
   sample_size = 512
 )
+#> ℹ Preprocessing data...
+#> ℹ Training isolation forest model...
+#> Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =
+#> 500, : 'sample_size' is larger than the number of rows in 'data', will be
+#> decreased.
+#> Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =
+#> 500, : Passed parameters for deterministic single-variable splits with no
+#> sub-sampling. Every tree fitted will end up doing exactly the same splits. It's
+#> recommended to set non-random split probabilities to less than 1, or to use the
+#> extended model (ndim > 1).
+#> ℹ Computing anomaly scores...
+#> ✔ Detected 4 outliers (12.5% of data)
+#> ✔ Outlier detection complete!
 ```
 
 ### 3. Verschiedene Tuning-Methoden
@@ -112,6 +255,7 @@ result_bayes <- detect_outliers(mtcars, tune_method = "bayesian")
 
 ``` r
 # Automatische One-Hot-Encoding von Faktoren
+set.seed(42)
 data <- data.frame(
   value1 = rnorm(100),
   value2 = rnorm(100),
@@ -119,125 +263,43 @@ data <- data.frame(
 )
 
 result <- detect_outliers(data)
+#> ℹ Preprocessing data...
+#> ℹ Encoding 1 categorical column...
+#> ℹ Tuning hyperparameters using grid search...
+#> ℹ Testing 16 parameter combinations...
+#> ✔ Best parameters found:
+#> • ntrees: 200
+#> • sample_size: 100
+#> • max_depth: 12
+#> • ndim: 2
+#> ℹ Training isolation forest model...
+#> ℹ Computing anomaly scores...
+#> ✔ Detected 10 outliers (10% of data)
+#> ✔ Outlier detection complete!
 ```
 
 ### 5. Detaillierte Outlier-Analyse
 
 ``` r
 result <- detect_outliers(mtcars)
-
-# Welche Zeile ist ein Outlier?
-outliers <- get_outlier_summary(result, detailed = FALSE)
-print(outliers)
-#   row_id anomaly_score n_outlier_features
-# 1     31         1.234                  3
-# 2     17         1.156                  2
+#> ℹ Preprocessing data...
+#> ℹ Tuning hyperparameters using grid search...
+#> ℹ Testing 16 parameter combinations...
+#> ✔ Best parameters found:
+#> • ntrees: 100
+#> • sample_size: 32
+#> • max_depth: 12
+#> • ndim: 2
+#> ℹ Training isolation forest model...
+#> ℹ Computing anomaly scores...
+#> ✔ Detected 4 outliers (12.5% of data)
+#> ✔ Outlier detection complete!
 
 # Welche Features sind in Zeile 31 auffällig?
 detailed <- get_outlier_summary(result, detailed = TRUE)
 detailed[row_id == 31]
+#> Empty data.table (0 rows and 27 cols): row_id,anomaly_score,is_outlier,feat_score_mpg,feat_score_cyl,feat_score_disp...
 ```
-
-## Workflow-Beispiel: Komplette Analyse
-
-``` r
-library(outlieR)
-library(data.table)
-
-# 1. Daten laden
-data <- fread("your_data.csv")
-
-# 2. Outlier-Erkennung mit Tuning
-result <- detect_outliers(
-  data = data,
-  contamination = 0.1,
-  tune = TRUE,
-  tune_method = "random",
-  parallel = TRUE,
-  verbose = TRUE
-)
-
-# 3. Modell-Performance prüfen
-print(result)
-# Zeigt: Anzahl Outliers, verwendete Parameter, Metriken
-
-# 4. Top Outliers identifizieren
-top_outliers <- get_outlier_summary(result)[1:10]
-print(top_outliers)
-
-# 5. Visualisierungen erstellen
-plots <- plot(result, type = "all")
-
-# 6. Outlier-Zeilen extrahieren für weitere Analyse
-outlier_rows <- data[result$outliers, ]
-
-# 7. Outlier-Details als data.table für Weiterverarbeitung
-outlier_dt <- data.table::as.data.table(result$outlier_details)
-outlier_dt[is_outlier == TRUE, .N, by = n_outlier_features]
-```
-
-## API-Referenz
-
-### Hauptfunktion
-
-#### `detect_outliers()`
-
-Hauptfunktion zur Outlier-Erkennung.
-
-**Parameter:** - `data`: data.frame oder data.table mit den Daten -
-`target_cols`: Character-Vektor mit Spaltennamen (NULL = alle
-numerischen) - `contamination`: Erwarteter Outlier-Anteil (0-1, default:
-0.1) - `tune`: Soll automatisches Tuning durchgeführt werden? (default:
-TRUE) - `tune_method`: “grid”, “random”, oder “bayesian” (default:
-“grid”) - `n_trees`: Anzahl Bäume im Isolation Forest (default: 100) -
-`sample_size`: Sample-Größe pro Baum (default: “auto”) - `max_depth`:
-Maximale Baumtiefe (default: “auto”) - `seed`: Random Seed für
-Reproduzierbarkeit - `parallel`: Parallele Verarbeitung beim Tuning?
-(default: TRUE) - `verbose`: Progress-Meldungen anzeigen? (default:
-TRUE)
-
-**Rückgabewert:** Objekt der Klasse `outlier_detector` mit: - `model`:
-Trainiertes isotree-Modell - `scores`: Anomaly Scores für jede
-Beobachtung - `outliers`: Logischer Vektor mit Outlier-Status -
-`outlier_details`: data.table mit detaillierter Feature-Analyse -
-`threshold`: Verwendeter Score-Threshold - `params`: Verwendete
-Modell-Parameter - `metrics`: Performance-Metriken - `preprocessing`:
-Informationen zur Daten-Vorverarbeitung
-
-### Hilfsfunktionen
-
-#### `get_outlier_summary(x, detailed = TRUE)`
-
-Extrahiert Outlier-Zusammenfassung aus Ergebnisobjekt.
-
-#### `plot(x, type = "score", n_top = 10, ...)`
-
-Erstellt Visualisierungen. Typen: - `"score"`: Score-Verteilung über
-alle Beobachtungen - `"features"`: Feature Importance für Outliers -
-`"distribution"`: Histogramm der Scores nach Klasse - `"pca"`:
-PCA-Projektion mit Outlier-Markierung - `"heatmap"`:
-Feature-Score-Heatmap für Top-Outliers - `"all"`: Alle Plots kombiniert
-
-## Design-Prinzipien
-
-### data.table-Stil
-
-``` r
-# Effiziente Operationen mit data.table
-result <- detect_outliers(your_data)
-dt <- data.table::as.data.table(result$outlier_details)
-
-# Analyze by reference
-dt[is_outlier == TRUE, summary_stat := mean(anomaly_score)]
-dt[, .N, by = .(is_outlier, n_outlier_features)]
-```
-
-### Tidy Design
-
-- **Konsistente API**: Eine Hauptfunktion mit klaren Parametern
-- **Pipes-ready**: Funktioniert mit `|>` und `%>%`
-- **Informative Ausgaben**: Klare Print- und Summary-Methoden
-- **Flexibilität**: Viele Optionen, aber sinnvolle Defaults
 
 ## Performance
 
@@ -276,35 +338,14 @@ result$outliers <- custom_outliers
 result$threshold <- custom_threshold
 ```
 
-### Integration mit anderen Packages
-
-``` r
-# Mit data.table Workflows
-library(data.table)
-dt <- as.data.table(mtcars)
-result <- detect_outliers(dt)
-dt[, is_outlier := result$outliers]
-dt[is_outlier == TRUE, .SD, .SDcols = c("mpg", "cyl", "disp")]
-
-# Mit ggplot2 für Custom Plots
-library(ggplot2)
-plot_data <- data.table(
-  index = seq_along(result$scores),
-  score = result$scores,
-  outlier = result$outliers
-)
-ggplot(plot_data, aes(x = index, y = score, color = outlier)) +
-  geom_point()
-```
-
 ## Troubleshooting
 
 ### Zu viele/wenige Outliers
 
 ``` r
 # Contamination-Parameter anpassen
-result <- detect_outliers(data, contamination = 0.05)  # Weniger Outliers
-result <- detect_outliers(data, contamination = 0.15)  # Mehr Outliers
+result <- detect_outliers(data, contamination = 0.05) # Weniger Outliers
+result <- detect_outliers(data, contamination = 0.15) # Mehr Outliers
 ```
 
 ### Schlechte Trennung
@@ -327,17 +368,6 @@ result <- detect_outliers(large_data, parallel = FALSE)
 result <- detect_outliers(large_data, n_trees = 50, tune = FALSE)
 ```
 
-## Roadmap
-
-- [ ] Support für mehr Tuning-Algorithmen (Bayesian Optimization
-  vollständig)
-- [ ] Integration mit mlr3
-- [ ] Streaming-Outlier-Detection
-- [ ] Shapley-Values für Feature-Attribution
-- [ ] Automatische Outlier-Bereinigung/Imputation
-- [ ] Time-Series Outlier Detection
-- [ ] Multi-Modal Distribution Support
-
 ## Mitwirken
 
 Contributions sind willkommen! Bitte:
@@ -354,19 +384,7 @@ Contributions sind willkommen! Bitte:
 
 MIT License - siehe [LICENSE](LICENSE) Datei für Details.
 
-## Zitierung
-
-``` bibtex
-@software{outlieR2024,
-  author = {Distler, Fabian},
-  title = {outlieR: Automatic Outlier Detection Using Isolation Forests},
-  year = {2024},
-  url = {https://github.com/yourusername/outlieR}
-}
-```
-
 ## Danksagungen
 
 - `isotree` Package für die Isolation Forest Implementierung
-- `data.table` für effiziente Datenverarbeitung
 - R Community für Feedback und Inspiration
