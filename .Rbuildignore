@@ -6,3 +6,5 @@
 ^dev$
 ^CLAUDE\.md$
 ^\.claude$
+^doc$
+^Meta$
