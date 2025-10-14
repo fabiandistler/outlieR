@@ -12,7 +12,7 @@ test_that("tune_parameters returns valid parameters", {
 
   expect_true("ntrees" %in% names(params))
   expect_true(is.numeric(params$ntrees))
-  expect_true(params$ntrees > 0)
+  expect_gt(params$ntrees, 0)
 })
 
 test_that("evaluate_params handles errors gracefully", {

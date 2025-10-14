@@ -3,7 +3,7 @@ test_that("prepare_data handles numeric data", {
 
   expect_true("processed" %in% names(prep))
   expect_true("info" %in% names(prep))
-  expect_equal(nrow(prep$processed), nrow(mtcars))
+  expect_identical(nrow(prep$processed), nrow(mtcars))
 })
 
 test_that("prepare_data handles categorical data", {
@@ -14,8 +14,8 @@ test_that("prepare_data handles categorical data", {
 
   prep <- prepare_data(data)
 
-  expect_true(ncol(prep$processed) > ncol(data)) # One-hot encoded
-  expect_true(length(prep$info$categorical_cols) > 0)
+  expect_gt(ncol(prep$processed), ncol(data)) # One-hot encoded
+  expect_gt(length(prep$info$categorical_cols), 0)
 })
 
 test_that("prepare_data imputes missing values", {

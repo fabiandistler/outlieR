@@ -5,8 +5,8 @@ test_that("detect_outliers works with basic input", {
   expect_true("model" %in% names(result))
   expect_true("scores" %in% names(result))
   expect_true("outliers" %in% names(result))
-  expect_equal(length(result$scores), nrow(mtcars))
-  expect_equal(length(result$outliers), nrow(mtcars))
+  expect_length(result$scores, nrow(mtcars))
+  expect_length(result$outliers, nrow(mtcars))
 })
 
 test_that("detect_outliers respects contamination parameter", {
@@ -30,7 +30,7 @@ test_that("detect_outliers works with specific columns", {
   )
 
   expect_s3_class(result, "outlier_detector")
-  expect_equal(result$preprocessing$original_cols, c("mpg", "hp", "wt"))
+  expect_identical(result$preprocessing$original_cols, c("mpg", "hp", "wt"))
 })
 
 test_that("detect_outliers handles categorical variables", {
@@ -43,7 +43,7 @@ test_that("detect_outliers handles categorical variables", {
   result <- detect_outliers(data, verbose = FALSE, tune = FALSE)
 
   expect_s3_class(result, "outlier_detector")
-  expect_true(length(result$preprocessing$categorical_cols) > 0)
+  expect_gt(length(result$preprocessing$categorical_cols), 0)
 })
 
 test_that("detect_outliers handles missing values", {
@@ -103,7 +103,7 @@ test_that("get_outlier_summary works", {
 
   expect_s3_class(summary_detailed, "data.table")
   expect_s3_class(summary_simple, "data.table")
-  expect_true(nrow(summary_simple) <= nrow(summary_detailed))
+  expect_lte(nrow(summary_simple), nrow(summary_detailed))
   expect_true("row_id" %in% names(summary_simple))
   expect_true("anomaly_score" %in% names(summary_simple))
 })
@@ -139,16 +139,16 @@ test_that("metrics are calculated correctly", {
   expect_true("mean_score" %in% names(result$metrics))
   expect_true("detection_rate" %in% names(result$metrics))
   expect_true(is.numeric(result$metrics$mean_score))
-  expect_true(result$metrics$detection_rate >= 0)
-  expect_true(result$metrics$detection_rate <= 1)
+  expect_gte(result$metrics$detection_rate, 0)
+  expect_lte(result$metrics$detection_rate, 1)
 })
 
 test_that("seed produces reproducible results", {
   result1 <- detect_outliers(mtcars, seed = 123, verbose = FALSE, tune = FALSE)
   result2 <- detect_outliers(mtcars, seed = 123, verbose = FALSE, tune = FALSE)
 
-  expect_equal(result1$scores, result2$scores)
-  expect_equal(result1$outliers, result2$outliers)
+  expect_identical(result1$scores, result2$scores)
+  expect_identical(result1$outliers, result2$outliers)
 })
 
 test_that("data.table input works", {
