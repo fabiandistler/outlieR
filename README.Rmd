@@ -73,7 +73,7 @@ plot(result, type = "pca") # PCA projection
 
 ### 1. Analyze specific columns
 
-```{r}
+```{r,eval=FALSE}
 # Use only selected variables
 result <- detect_outliers(
   data = iris,
@@ -84,7 +84,7 @@ result <- detect_outliers(
 
 ### 2. Without automatic tuning
 
-```{r}
+```{r,eval=FALSE}
 # Manually specify parameters for more control
 result <- detect_outliers(
   data = mtcars,
@@ -110,7 +110,7 @@ result_bayes <- detect_outliers(mtcars, tune_method = "bayesian")
 
 ### 4. With categorical variables
 
-```{r}
+```{r,eval=FALSE}
 # Automatic one-hot encoding of factors
 set.seed(42)
 data <- data.frame(
@@ -124,7 +124,7 @@ result <- detect_outliers(data)
 
 ### 5. Detailed outlier analysis
 
-```{r,}
+```{r,eval=FALSE}
 result <- detect_outliers(mtcars)
 
 # Which features are suspicious in row 31?

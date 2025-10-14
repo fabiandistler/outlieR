@@ -99,7 +99,8 @@ result_subset <- detect_outliers(
   data = iris,
   target_cols = c("Sepal.Length", "Sepal.Width", "Petal.Length"),
   contamination = 0.05, # Expect 5% outliers
-  verbose = FALSE
+  verbose = FALSE,
+  parallel = FALSE
 )
 
 get_outlier_summary(result_subset, detailed = FALSE)
@@ -166,7 +167,7 @@ mixed_data <- data.frame(
 )
 
 # Automatic detection and encoding
-result_mixed <- detect_outliers(mixed_data, verbose = FALSE)
+result_mixed <- detect_outliers(mixed_data, verbose = FALSE, parallel = FALSE)
 
 # Display preprocessing information
 cat("Original columns:", result_mixed$preprocessing$original_cols, "\n")
@@ -329,7 +330,7 @@ result <- detect_outliers(
 ## Understanding Anomaly Scores
 
 ```{r}
-result <- detect_outliers(mtcars, verbose = FALSE)
+result <- detect_outliers(mtcars, verbose = FALSE, parallel = FALSE)
 
 # Score statistics
 cat("Score range:", range(result$scores), "\n")
@@ -348,57 +349,6 @@ print(result$metrics)
 * **outlier_separation**: Normalized separation between outliers and normal points
 * **detection_rate**: Actual proportion of detected outliers
 
-## Cohen's d Interpretation
-
-```{r}
-interpret_cohens_d <- function(d) {
-  if (is.na(d)) {
-    return("No outliers found")
-  }
-  if (d < 0.2) {
-    return("Very weak separation")
-  }
-  if (d < 0.5) {
-    return("Weak separation")
-  }
-  if (d < 0.8) {
-    return("Moderate separation")
-  }
-  "Strong separation"
-}
-
-result <- detect_outliers(mtcars, verbose = FALSE)
-cat(
-  "Separation quality:",
-  interpret_cohens_d(result$metrics$cohens_d), "\n"
-)
-```
-
-# Comparing Different Approaches
-
-```{r}
-# Test different contamination values
-contaminations <- c(0.05, 0.10, 0.15)
-
-comparison <- lapply(contaminations, function(cont) {
-  result <- detect_outliers(
-    mtcars,
-    contamination = cont,
-    tune = FALSE,
-    verbose = FALSE
-  )
-
-  data.table::data.table(
-    contamination = cont,
-    n_outliers = sum(result$outliers),
-    cohens_d = result$metrics$cohens_d,
-    separation = result$metrics$outlier_separation
-  )
-})
-
-comparison_dt <- data.table::rbindlist(comparison)
-print(comparison_dt)
-```
 
 # Common Use Cases
 
@@ -425,7 +375,7 @@ fwrite(suspicious, "suspicious_transactions.csv")
 
 ```{r eval=FALSE}
 # Check IoT sensor readings
-sensor_data <- fread("sensor_readings.csv")
+sensor_data <- data.table::fread("sensor_readings.csv")
 
 result <- detect_outliers(
   sensor_data,
@@ -443,7 +393,7 @@ faulty_readings <- sensor_data[result$outliers, ]
 
 ```{r eval=FALSE}
 # Find unusual customer behavior patterns
-customer_data <- fread("customer_behavior.csv")
+customer_data <- data.table::fread("customer_behavior.csv")
 
 result <- detect_outliers(
   customer_data,
@@ -456,66 +406,3 @@ result <- detect_outliers(
 # Identify VIP or risk customers
 unusual_customers <- customer_data[result$outliers, ]
 ```
-
-# Best Practices
-
-## 1. Perform Exploratory Data Analysis First
-
-```{r eval=FALSE}
-# Understand data before outlier detection
-summary(your_data)
-plot(your_data) # Base R plots
-cor(your_data[, numeric_cols]) # Correlations
-```
-
-## 2. Adjust the contamination Parameter
-
-```{r eval=FALSE}
-# Start with domain knowledge
-# - Fraud: 0.01 - 0.05
-# - Quality Control: 0.05 - 0.10
-# - General Exploration: 0.10 - 0.15
-
-# Then adjust iteratively based on results
-```
-
-## 3. Use Visualizations
-
-```{r eval=FALSE}
-result <- detect_outliers(your_data)
-
-# View all plots
-plots <- plot(result, type = "all")
-
-# Feature importance is particularly useful
-plot(result, type = "features")
-```
-
-## 4. Validate Results
-
-```{r eval=FALSE}
-# Manually review outliers
-outliers <- get_outlier_summary(result)
-View(your_data[outliers$row_id, ])
-
-# Discuss with domain experts
-# Are the outliers meaningful?
-```
-
-# Summary
-
-`outlieR` provides a complete solution for outlier detection:
-
-* ✅ **Simple API**: One function for most cases
-* ✅ **Automatic tuning**: Or manual control
-* ✅ **Detailed diagnostics**: Feature-level analysis
-* ✅ **Visualizations**: Multiple plot types
-* ✅ **data.table integration**: Fast and flexible
-* ✅ **Reproducible**: Seed support
-
-For more information, see:
-
-* `?detect_outliers` for full parameter documentation
-* [GitHub Issues](https://github.com/yourusername/outlieR/issues) for questions
-* [Vignettes](https://github.com/yourusername/outlieR/vignettes) for more examples
-

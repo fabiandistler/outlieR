@@ -49,7 +49,7 @@ tune_parameters <- function(data,
 #'
 #' @keywords internal
 tune_grid_search <- function(data, param_space, contamination, parallel, verbose) {
-  grid <- data.table::CJ(param_space)
+  grid <- do.call(data.table::CJ, param_space)
 
   if (verbose) {
     cli::cli_alert_info("Testing {nrow(grid)} parameter combinations...")

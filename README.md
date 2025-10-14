@@ -49,12 +49,14 @@ library(outlieR)
 result <- detect_outliers(mtcars)
 #> ℹ Preprocessing data...
 #> ℹ Tuning hyperparameters using grid search...
-#> ℹ Testing 16 parameter combinations...
+#> ℹ Testing 675 parameter combinations...
 #> ✔ Best parameters found:
-#> • ntrees: 100
-#> • sample_size: 32
-#> • max_depth: 12
 #> • ndim: 2
+#> • ntrees: 300
+#> • prob_pick_avg_gain: 0
+#> • prob_pick_pooled_gain: 0
+#> • ntry: 1
+#> • sample_size: 32
 #> ℹ Training isolation forest model...
 #> ℹ Computing anomaly scores...
 #> ✔ Detected 4 outliers (12.5% of data)
@@ -67,25 +69,25 @@ print(result)
 #> 
 #> Model Configuration:
 #>   - Algorithm: Isolation Forest (isotree)
-#>   - Number of trees: 100 
+#>   - Number of trees: 300 
 #>   - Sample size: 32 
-#>   - Max depth: 12 
+#>   - Max depth: auto 
 #> 
 #> Detection Summary:
 #>   - Total observations: 32 
 #>   - Outliers detected: 4 ( 12.5 %)
-#>   - Anomaly score threshold: 8.1405 
+#>   - Anomaly score threshold: 7.6925 
 #> 
 #> Performance Metrics:
-#>   - mean_score : 6.5564 
-#>   - median_score : 6.7492 
-#>   - sd_score : 1.2908 
-#>   - min_score : 3.91 
-#>   - max_score : 8.4067 
-#>   - mean_outlier_score : 8.2838 
-#>   - mean_normal_score : 6.3096 
-#>   - cohens_d : 2.3444 
-#>   - outlier_separation : 1.5295 
+#>   - mean_score : 6.5543 
+#>   - median_score : 6.9225 
+#>   - sd_score : 1.0995 
+#>   - min_score : 4.039 
+#>   - max_score : 7.9759 
+#>   - mean_outlier_score : 7.8597 
+#>   - mean_normal_score : 6.3678 
+#>   - cohens_d : 2.0018 
+#>   - outlier_separation : 1.3569 
 #>   - detection_rate : 0.125 
 #>   - expected_contamination : 0.1 
 #>   - actual_contamination : 0.125 
@@ -98,25 +100,25 @@ summary(result)
 #> 
 #> Model Configuration:
 #>   - Algorithm: Isolation Forest (isotree)
-#>   - Number of trees: 100 
+#>   - Number of trees: 300 
 #>   - Sample size: 32 
-#>   - Max depth: 12 
+#>   - Max depth: auto 
 #> 
 #> Detection Summary:
 #>   - Total observations: 32 
 #>   - Outliers detected: 4 ( 12.5 %)
-#>   - Anomaly score threshold: 8.1405 
+#>   - Anomaly score threshold: 7.6925 
 #> 
 #> Performance Metrics:
-#>   - mean_score : 6.5564 
-#>   - median_score : 6.7492 
-#>   - sd_score : 1.2908 
-#>   - min_score : 3.91 
-#>   - max_score : 8.4067 
-#>   - mean_outlier_score : 8.2838 
-#>   - mean_normal_score : 6.3096 
-#>   - cohens_d : 2.3444 
-#>   - outlier_separation : 1.5295 
+#>   - mean_score : 6.5543 
+#>   - median_score : 6.9225 
+#>   - sd_score : 1.0995 
+#>   - min_score : 4.039 
+#>   - max_score : 7.9759 
+#>   - mean_outlier_score : 7.8597 
+#>   - mean_normal_score : 6.3678 
+#>   - cohens_d : 2.0018 
+#>   - outlier_separation : 1.3569 
 #>   - detection_rate : 0.125 
 #>   - expected_contamination : 0.1 
 #>   - actual_contamination : 0.125 
@@ -127,44 +129,44 @@ summary(result)
 #> Top 10 Outliers:
 #>    row_id anomaly_score n_outlier_features
 #>     <int>         <num>              <int>
-#> 1:     23      8.406667                  0
-#> 2:     12      8.296667                  0
-#> 3:     14      8.290000                  0
-#> 4:      3      8.141667                  0
+#> 1:     23      7.975920                  0
+#> 2:     12      7.886702                  0
+#> 3:     14      7.871458                  0
+#> 4:      5      7.704758                  0
 
 # Extract outlier details
 outlier_summary <- get_outlier_summary(result)
 utils::head(outlier_summary)
 #>    row_id anomaly_score is_outlier feat_score_mpg feat_score_cyl
 #>     <int>         <num>     <lgcl>          <num>          <num>
-#> 1:     23      8.406667       TRUE      0.7391680      0.6744908
-#> 2:     12      8.296667       TRUE      0.5174176      0.6744908
-#> 3:     14      8.290000       TRUE      0.7391680      0.6744908
-#> 4:      3      8.141667       TRUE      0.6652512      0.6744908
+#> 1:     23      7.975920       TRUE     0.73916796      0.6744908
+#> 2:     12      7.886702       TRUE     0.51741757      0.6744908
+#> 3:     14      7.871458       TRUE     0.73916796      0.6744908
+#> 4:      5      7.704758       TRUE     0.09239599      0.6744908
 #>    feat_score_disp feat_score_hp feat_score_drat feat_score_wt feat_score_qsec
 #>              <num>         <num>           <num>         <num>           <num>
 #> 1:       0.7666771     0.3502164       0.7738894     0.1433700       0.2895719
 #> 2:       0.5659316     0.7393456       0.8874878     0.9710060       0.2189446
 #> 3:       0.5659316     0.7393456       0.8874878     0.5930305       0.2048192
-#> 4:       0.6285756     0.3891293       0.2200970     1.3098806       0.6356457
+#> 4:       1.1653207     0.6744908       0.7738894     0.1498868       0.4873284
 #>    feat_score_vs feat_score_am feat_score_gear feat_score_carb
 #>            <num>         <num>           <num>           <num>
 #> 1:             0             0       0.6744908       0.0000000
 #> 2:             0             0       0.6744908       0.6744908
 #> 3:             0             0       0.6744908       0.6744908
-#> 4:             0             0       0.0000000       0.6744908
+#> 4:             0             0       0.6744908       0.0000000
 #>    n_outlier_features top_outlier_features   mpg   cyl  disp    hp  drat    wt
 #>                 <int>               <char> <num> <num> <num> <num> <num> <num>
 #> 1:                  0      drat, disp, mpg  15.2     8 304.0   150  3.15 3.435
 #> 2:                  0         wt, drat, hp  16.4     8 275.8   180  3.07 4.070
 #> 3:                  0        drat, hp, mpg  15.2     8 275.8   180  3.07 3.780
-#> 4:                  0        wt, cyl, carb  22.8     4 108.0    93  3.85 2.320
+#> 4:                  0      disp, drat, cyl  18.7     8 360.0   175  3.15 3.440
 #>     qsec    vs    am  gear  carb
 #>    <num> <num> <num> <num> <num>
 #> 1: 17.30     0     0     3     2
 #> 2: 17.40     0     0     3     3
 #> 3: 18.00     0     0     3     3
-#> 4: 18.61     1     1     4     1
+#> 4: 17.02     0     0     3     2
 
 # Create visualizations
 plot(result, type = "score") # Score distribution
@@ -195,23 +197,6 @@ result <- detect_outliers(
   target_cols = c("Sepal.Length", "Sepal.Width", "Petal.Length"),
   contamination = 0.05 # Expect 5% outliers
 )
-#> ℹ Preprocessing data...
-#> ℹ Tuning hyperparameters using grid search...
-#> ℹ Testing 16 parameter combinations...
-#> ✔ Best parameters found:
-#> • ntrees: 100
-#> • sample_size: 150
-#> • max_depth: 12
-#> • ndim: 1
-#> ℹ Training isolation forest model...
-#> Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =
-#> 500, : Passed parameters for deterministic single-variable splits with no
-#> sub-sampling. Every tree fitted will end up doing exactly the same splits. It's
-#> recommended to set non-random split probabilities to less than 1, or to use the
-#> extended model (ndim > 1).
-#> ℹ Computing anomaly scores...
-#> ✔ Detected 8 outliers (5.33% of data)
-#> ✔ Outlier detection complete!
 ```
 
 ### 2. Without automatic tuning
@@ -225,19 +210,6 @@ result <- detect_outliers(
   max_depth = 12,
   sample_size = 512
 )
-#> ℹ Preprocessing data...
-#> ℹ Training isolation forest model...
-#> Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =
-#> 500, : 'sample_size' is larger than the number of rows in 'data', will be
-#> decreased.
-#> Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =
-#> 500, : Passed parameters for deterministic single-variable splits with no
-#> sub-sampling. Every tree fitted will end up doing exactly the same splits. It's
-#> recommended to set non-random split probabilities to less than 1, or to use the
-#> extended model (ndim > 1).
-#> ℹ Computing anomaly scores...
-#> ✔ Detected 4 outliers (12.5% of data)
-#> ✔ Outlier detection complete!
 ```
 
 ### 3. Different tuning methods
@@ -265,42 +237,16 @@ data <- data.frame(
 )
 
 result <- detect_outliers(data)
-#> ℹ Preprocessing data...
-#> ℹ Encoding 1 categorical column...
-#> ℹ Tuning hyperparameters using grid search...
-#> ℹ Testing 16 parameter combinations...
-#> ✔ Best parameters found:
-#> • ntrees: 200
-#> • sample_size: 100
-#> • max_depth: 12
-#> • ndim: 2
-#> ℹ Training isolation forest model...
-#> ℹ Computing anomaly scores...
-#> ✔ Detected 10 outliers (10% of data)
-#> ✔ Outlier detection complete!
 ```
 
 ### 5. Detailed outlier analysis
 
 ``` r
 result <- detect_outliers(mtcars)
-#> ℹ Preprocessing data...
-#> ℹ Tuning hyperparameters using grid search...
-#> ℹ Testing 16 parameter combinations...
-#> ✔ Best parameters found:
-#> • ntrees: 100
-#> • sample_size: 32
-#> • max_depth: 12
-#> • ndim: 2
-#> ℹ Training isolation forest model...
-#> ℹ Computing anomaly scores...
-#> ✔ Detected 4 outliers (12.5% of data)
-#> ✔ Outlier detection complete!
 
 # Which features are suspicious in row 31?
 detailed <- get_outlier_summary(result, detailed = TRUE)
 detailed[row_id == 31]
-#> Empty data.table (0 rows and 27 cols): row_id,anomaly_score,is_outlier,feat_score_mpg,feat_score_cyl,feat_score_disp...
 ```
 
 ## Performance

@@ -14,17 +14,17 @@ BugReports: https://github.com/fabiandistler/outlieR/issues
 Imports: 
     cli,
     data.table,
-    dplyr,
     ggplot2,
     isotree,
     parallel,
-    patchwork
+    patchwork,
+    utils,
+    withr
 Suggests: 
     knitr,
     rmarkdown,
     spelling,
-    testthat (>= 3.0.0),
-    utils
+    testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3

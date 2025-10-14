@@ -67,7 +67,7 @@ detect_outliers <- function(data,
   tune_method <- match.arg(tune_method)
   validate_inputs(data, target_cols, contamination)
 
-  if (!is.null(seed)) set.seed(seed)
+  if (!is.null(seed)) withr::local_seed(seed)
 
   if (verbose) cli::cli_alert_info("Preprocessing data...")
 
