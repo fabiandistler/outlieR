@@ -57,12 +57,18 @@ tune_grid_search <- function(data, param_space, contamination, parallel, verbose
 
   # Evaluate each combination
   if (parallel && requireNamespace("parallel", quietly = TRUE)) {
-    n_cores <- min(parallel::detectCores() - 1, nrow(grid))
+    n_cores <- get_n_cores(nrow(grid))
     cl <- parallel::makeCluster(n_cores)
     on.exit(parallel::stopCluster(cl))
 
-    parallel::clusterExport(cl, c("data", "contamination"), envir = environment())
-    parallel::clusterEvalQ(cl, library(isotree))
+    parallel::clusterExport(
+      cl,
+      c("data", "contamination", "evaluate_params"),
+      envir = environment()
+    )
+    parallel::clusterCall(cl, function() {
+      requireNamespace("isotree", quietly = TRUE)
+    })
 
     results <- parallel::parLapply(cl, seq_len(nrow(grid)), function(i) {
       params <- grid[i, ]
@@ -101,7 +107,6 @@ tune_grid_search <- function(data, param_space, contamination, parallel, verbose
 #'
 #' @keywords internal
 tune_random_search <- function(data, param_space, contamination, parallel, verbose) {
-  withr::local_seed(42)
   n_iterations <- 20
 
   if (verbose) {
@@ -120,12 +125,18 @@ tune_random_search <- function(data, param_space, contamination, parallel, verbo
 
   # Evaluate each combination
   if (parallel && requireNamespace("parallel", quietly = TRUE)) {
-    n_cores <- min(parallel::detectCores() - 1, n_iterations)
+    n_cores <- get_n_cores(n_iterations)
     cl <- parallel::makeCluster(n_cores)
     on.exit(parallel::stopCluster(cl), add = TRUE)
 
-    parallel::clusterExport(cl, c("data", "contamination"), envir = environment())
-    parallel::clusterEvalQ(cl, library(isotree))
+    parallel::clusterExport(
+      cl,
+      c("data", "contamination", "evaluate_params"),
+      envir = environment()
+    )
+    parallel::clusterCall(cl, function() {
+      requireNamespace("isotree", quietly = TRUE)
+    })
 
     results <- parallel::parLapply(cl, seq_len(nrow(random_grid)), function(i) {
       params <- random_grid[i, ]
@@ -193,8 +204,7 @@ evaluate_params <- function(data, params, contamination) {
         ndim = params$ndim,
         ntry = params$ntry,
         prob_pick_avg_gain = params$prob_pick_avg_gain,
-        prob_pick_pooled_gain = params$prob_pick_pooled_gain,
-        sample_size = params$sample_size
+        prob_pick_pooled_gain = params$prob_pick_pooled_gain
       )
 
       model_args <- model_args[!sapply(model_args, is.null)]
