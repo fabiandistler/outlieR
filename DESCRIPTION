@@ -18,6 +18,7 @@ Imports:
     isotree,
     parallel,
     patchwork,
+    stats,
     utils,
     withr
 Suggests: 
