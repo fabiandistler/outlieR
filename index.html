@@ -85,6 +85,7 @@
 <blockquote>
 <p>Automatic Outlier Detection Using Isolation Forests</p>
 </blockquote>
+<p>[Package Homepage]<a href="https://fabiandistler.github.io/outlieR/" class="external-link uri">https://fabiandistler.github.io/outlieR/</a></p>
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
@@ -192,104 +193,56 @@
 <span><span class="co">#&gt; Use get_outlier_summary() to see detailed outlier information</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Top 10 Outliers:</span></span>
-<span><span class="co">#&gt;    row_id anomaly_score</span></span>
-<span><span class="co">#&gt;     &lt;int&gt;         &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:     23      8.406667</span></span>
-<span><span class="co">#&gt; 2:     12      8.296667</span></span>
-<span><span class="co">#&gt; 3:     14      8.290000</span></span>
-<span><span class="co">#&gt; 4:      3      8.141667</span></span>
-<span><span class="co">#&gt;    n_outlier_features</span></span>
-<span><span class="co">#&gt;                 &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1:                  0</span></span>
-<span><span class="co">#&gt; 2:                  0</span></span>
-<span><span class="co">#&gt; 3:                  0</span></span>
-<span><span class="co">#&gt; 4:                  0</span></span>
+<span><span class="co">#&gt;    row_id anomaly_score n_outlier_features</span></span>
+<span><span class="co">#&gt;     &lt;int&gt;         &lt;num&gt;              &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1:     23      8.406667                  0</span></span>
+<span><span class="co">#&gt; 2:     12      8.296667                  0</span></span>
+<span><span class="co">#&gt; 3:     14      8.290000                  0</span></span>
+<span><span class="co">#&gt; 4:      3      8.141667                  0</span></span>
 <span></span>
 <span><span class="co"># Extract outlier details</span></span>
 <span><span class="va">outlier_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_outlier_summary.html">get_outlier_summary</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">outlier_summary</span><span class="op">)</span></span>
-<span><span class="co">#&gt;    row_id anomaly_score is_outlier</span></span>
-<span><span class="co">#&gt;     &lt;int&gt;         &lt;num&gt;     &lt;lgcl&gt;</span></span>
-<span><span class="co">#&gt; 1:     23      8.406667       TRUE</span></span>
-<span><span class="co">#&gt; 2:     12      8.296667       TRUE</span></span>
-<span><span class="co">#&gt; 3:     14      8.290000       TRUE</span></span>
-<span><span class="co">#&gt; 4:      3      8.141667       TRUE</span></span>
-<span><span class="co">#&gt;    feat_score_mpg feat_score_cyl</span></span>
-<span><span class="co">#&gt;             &lt;num&gt;          &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:      0.7391680      0.6744908</span></span>
-<span><span class="co">#&gt; 2:      0.5174176      0.6744908</span></span>
-<span><span class="co">#&gt; 3:      0.7391680      0.6744908</span></span>
-<span><span class="co">#&gt; 4:      0.6652512      0.6744908</span></span>
-<span><span class="co">#&gt;    feat_score_disp feat_score_hp</span></span>
-<span><span class="co">#&gt;              &lt;num&gt;         &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:       0.7666771     0.3502164</span></span>
-<span><span class="co">#&gt; 2:       0.5659316     0.7393456</span></span>
-<span><span class="co">#&gt; 3:       0.5659316     0.7393456</span></span>
-<span><span class="co">#&gt; 4:       0.6285756     0.3891293</span></span>
-<span><span class="co">#&gt;    feat_score_drat feat_score_wt</span></span>
-<span><span class="co">#&gt;              &lt;num&gt;         &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:       0.7738894     0.1433700</span></span>
-<span><span class="co">#&gt; 2:       0.8874878     0.9710060</span></span>
-<span><span class="co">#&gt; 3:       0.8874878     0.5930305</span></span>
-<span><span class="co">#&gt; 4:       0.2200970     1.3098806</span></span>
-<span><span class="co">#&gt;    feat_score_qsec feat_score_vs</span></span>
-<span><span class="co">#&gt;              &lt;num&gt;         &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:       0.2895719             0</span></span>
-<span><span class="co">#&gt; 2:       0.2189446             0</span></span>
-<span><span class="co">#&gt; 3:       0.2048192             0</span></span>
-<span><span class="co">#&gt; 4:       0.6356457             0</span></span>
-<span><span class="co">#&gt;    feat_score_am feat_score_gear</span></span>
-<span><span class="co">#&gt;            &lt;num&gt;           &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:             0       0.6744908</span></span>
-<span><span class="co">#&gt; 2:             0       0.6744908</span></span>
-<span><span class="co">#&gt; 3:             0       0.6744908</span></span>
-<span><span class="co">#&gt; 4:             0       0.0000000</span></span>
-<span><span class="co">#&gt;    feat_score_carb n_outlier_features</span></span>
-<span><span class="co">#&gt;              &lt;num&gt;              &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1:       0.0000000                  0</span></span>
-<span><span class="co">#&gt; 2:       0.6744908                  0</span></span>
-<span><span class="co">#&gt; 3:       0.6744908                  0</span></span>
-<span><span class="co">#&gt; 4:       0.6744908                  0</span></span>
-<span><span class="co">#&gt;    top_outlier_features   mpg   cyl</span></span>
-<span><span class="co">#&gt;                  &lt;char&gt; &lt;num&gt; &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:      drat, disp, mpg  15.2     8</span></span>
-<span><span class="co">#&gt; 2:         wt, drat, hp  16.4     8</span></span>
-<span><span class="co">#&gt; 3:        drat, hp, mpg  15.2     8</span></span>
-<span><span class="co">#&gt; 4:        wt, cyl, carb  22.8     4</span></span>
-<span><span class="co">#&gt;     disp    hp  drat    wt  qsec</span></span>
+<span><span class="co">#&gt;    row_id anomaly_score is_outlier feat_score_mpg feat_score_cyl</span></span>
+<span><span class="co">#&gt;     &lt;int&gt;         &lt;num&gt;     &lt;lgcl&gt;          &lt;num&gt;          &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:     23      8.406667       TRUE      0.7391680      0.6744908</span></span>
+<span><span class="co">#&gt; 2:     12      8.296667       TRUE      0.5174176      0.6744908</span></span>
+<span><span class="co">#&gt; 3:     14      8.290000       TRUE      0.7391680      0.6744908</span></span>
+<span><span class="co">#&gt; 4:      3      8.141667       TRUE      0.6652512      0.6744908</span></span>
+<span><span class="co">#&gt;    feat_score_disp feat_score_hp feat_score_drat feat_score_wt feat_score_qsec</span></span>
+<span><span class="co">#&gt;              &lt;num&gt;         &lt;num&gt;           &lt;num&gt;         &lt;num&gt;           &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:       0.7666771     0.3502164       0.7738894     0.1433700       0.2895719</span></span>
+<span><span class="co">#&gt; 2:       0.5659316     0.7393456       0.8874878     0.9710060       0.2189446</span></span>
+<span><span class="co">#&gt; 3:       0.5659316     0.7393456       0.8874878     0.5930305       0.2048192</span></span>
+<span><span class="co">#&gt; 4:       0.6285756     0.3891293       0.2200970     1.3098806       0.6356457</span></span>
+<span><span class="co">#&gt;    feat_score_vs feat_score_am feat_score_gear feat_score_carb</span></span>
+<span><span class="co">#&gt;            &lt;num&gt;         &lt;num&gt;           &lt;num&gt;           &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:             0             0       0.6744908       0.0000000</span></span>
+<span><span class="co">#&gt; 2:             0             0       0.6744908       0.6744908</span></span>
+<span><span class="co">#&gt; 3:             0             0       0.6744908       0.6744908</span></span>
+<span><span class="co">#&gt; 4:             0             0       0.0000000       0.6744908</span></span>
+<span><span class="co">#&gt;    n_outlier_features top_outlier_features   mpg   cyl  disp    hp  drat    wt</span></span>
+<span><span class="co">#&gt;                 &lt;int&gt;               &lt;char&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span></span>
+<span><span class="co">#&gt; 1:                  0      drat, disp, mpg  15.2     8 304.0   150  3.15 3.435</span></span>
+<span><span class="co">#&gt; 2:                  0         wt, drat, hp  16.4     8 275.8   180  3.07 4.070</span></span>
+<span><span class="co">#&gt; 3:                  0        drat, hp, mpg  15.2     8 275.8   180  3.07 3.780</span></span>
+<span><span class="co">#&gt; 4:                  0        wt, cyl, carb  22.8     4 108.0    93  3.85 2.320</span></span>
+<span><span class="co">#&gt;     qsec    vs    am  gear  carb</span></span>
 <span><span class="co">#&gt;    &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1: 304.0   150  3.15 3.435 17.30</span></span>
-<span><span class="co">#&gt; 2: 275.8   180  3.07 4.070 17.40</span></span>
-<span><span class="co">#&gt; 3: 275.8   180  3.07 3.780 18.00</span></span>
-<span><span class="co">#&gt; 4: 108.0    93  3.85 2.320 18.61</span></span>
-<span><span class="co">#&gt;       vs    am  gear  carb</span></span>
-<span><span class="co">#&gt;    &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:     0     0     3     2</span></span>
-<span><span class="co">#&gt; 2:     0     0     3     3</span></span>
-<span><span class="co">#&gt; 3:     0     0     3     3</span></span>
-<span><span class="co">#&gt; 4:     1     1     4     1</span></span>
+<span><span class="co">#&gt; 1: 17.30     0     0     3     2</span></span>
+<span><span class="co">#&gt; 2: 17.40     0     0     3     3</span></span>
+<span><span class="co">#&gt; 3: 18.00     0     0     3     3</span></span>
+<span><span class="co">#&gt; 4: 18.61     1     1     4     1</span></span>
 <span></span>
 <span><span class="co"># Create visualizations</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span>, type <span class="op">=</span> <span class="st">"score"</span><span class="op">)</span> <span class="co"># Score distribution</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-3
-</p>
-</div>
+<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span>, type <span class="op">=</span> <span class="st">"features"</span><span class="op">)</span> <span class="co"># Feature importance</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-unnamed-chunk-3-2.png" alt="plot of chunk unnamed-chunk-3" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-3
-</p>
-</div>
+<p><img src="reference/figures/README-unnamed-chunk-3-2.png" width="100%"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">result</span>, type <span class="op">=</span> <span class="st">"pca"</span><span class="op">)</span> <span class="co"># PCA projection</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-unnamed-chunk-3-3.png" alt="plot of chunk unnamed-chunk-3" width="100%"><p class="caption">
-plot of chunk unnamed-chunk-3
-</p>
-</div>
+<p><img src="reference/figures/README-unnamed-chunk-3-3.png" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="detailed-examples">Detailed Examples<a class="anchor" aria-label="anchor" href="#detailed-examples"></a>
@@ -313,17 +266,11 @@ plot of chunk unnamed-chunk-3
 <span><span class="co">#&gt; • max_depth: 12</span></span>
 <span><span class="co">#&gt; • ndim: 1</span></span>
 <span><span class="co">#&gt; ℹ Training isolation forest model...</span></span>
-<span><span class="co">#&gt; Warning in (function (data,</span></span>
-<span><span class="co">#&gt; sample_size = min(nrow(data),</span></span>
-<span><span class="co">#&gt; 10000L), ntrees = 500, : Passed</span></span>
-<span><span class="co">#&gt; parameters for deterministic</span></span>
-<span><span class="co">#&gt; single-variable splits with no</span></span>
-<span><span class="co">#&gt; sub-sampling. Every tree fitted will</span></span>
-<span><span class="co">#&gt; end up doing exactly the same splits.</span></span>
-<span><span class="co">#&gt; It's recommended to set non-random</span></span>
-<span><span class="co">#&gt; split probabilities to less than 1,</span></span>
-<span><span class="co">#&gt; or to use the extended model (ndim &gt;</span></span>
-<span><span class="co">#&gt; 1).</span></span>
+<span><span class="co">#&gt; Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =</span></span>
+<span><span class="co">#&gt; 500, : Passed parameters for deterministic single-variable splits with no</span></span>
+<span><span class="co">#&gt; sub-sampling. Every tree fitted will end up doing exactly the same splits. It's</span></span>
+<span><span class="co">#&gt; recommended to set non-random split probabilities to less than 1, or to use the</span></span>
+<span><span class="co">#&gt; extended model (ndim &gt; 1).</span></span>
 <span><span class="co">#&gt; ℹ Computing anomaly scores...</span></span>
 <span><span class="co">#&gt; ✔ Detected 8 outliers (5.33% of data)</span></span>
 <span><span class="co">#&gt; ✔ Outlier detection complete!</span></span></code></pre></div>
@@ -342,23 +289,14 @@ plot of chunk unnamed-chunk-3
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ Preprocessing data...</span></span>
 <span><span class="co">#&gt; ℹ Training isolation forest model...</span></span>
-<span><span class="co">#&gt; Warning in (function (data,</span></span>
-<span><span class="co">#&gt; sample_size = min(nrow(data),</span></span>
-<span><span class="co">#&gt; 10000L), ntrees = 500, :</span></span>
-<span><span class="co">#&gt; 'sample_size' is larger than the</span></span>
-<span><span class="co">#&gt; number of rows in 'data', will be</span></span>
+<span><span class="co">#&gt; Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =</span></span>
+<span><span class="co">#&gt; 500, : 'sample_size' is larger than the number of rows in 'data', will be</span></span>
 <span><span class="co">#&gt; decreased.</span></span>
-<span><span class="co">#&gt; Warning in (function (data,</span></span>
-<span><span class="co">#&gt; sample_size = min(nrow(data),</span></span>
-<span><span class="co">#&gt; 10000L), ntrees = 500, : Passed</span></span>
-<span><span class="co">#&gt; parameters for deterministic</span></span>
-<span><span class="co">#&gt; single-variable splits with no</span></span>
-<span><span class="co">#&gt; sub-sampling. Every tree fitted will</span></span>
-<span><span class="co">#&gt; end up doing exactly the same splits.</span></span>
-<span><span class="co">#&gt; It's recommended to set non-random</span></span>
-<span><span class="co">#&gt; split probabilities to less than 1,</span></span>
-<span><span class="co">#&gt; or to use the extended model (ndim &gt;</span></span>
-<span><span class="co">#&gt; 1).</span></span>
+<span><span class="co">#&gt; Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =</span></span>
+<span><span class="co">#&gt; 500, : Passed parameters for deterministic single-variable splits with no</span></span>
+<span><span class="co">#&gt; sub-sampling. Every tree fitted will end up doing exactly the same splits. It's</span></span>
+<span><span class="co">#&gt; recommended to set non-random split probabilities to less than 1, or to use the</span></span>
+<span><span class="co">#&gt; extended model (ndim &gt; 1).</span></span>
 <span><span class="co">#&gt; ℹ Computing anomaly scores...</span></span>
 <span><span class="co">#&gt; ✔ Detected 4 outliers (12.5% of data)</span></span>
 <span><span class="co">#&gt; ✔ Outlier detection complete!</span></span></code></pre></div>
@@ -424,7 +362,7 @@ plot of chunk unnamed-chunk-3
 <span><span class="co"># Which features are suspicious in row 31?</span></span>
 <span><span class="va">detailed</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_outlier_summary.html">get_outlier_summary</a></span><span class="op">(</span><span class="va">result</span>, detailed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">detailed</span><span class="op">[</span><span class="va">row_id</span> <span class="op">==</span> <span class="fl">31</span><span class="op">]</span></span>
-<span><span class="co">#&gt; Error: object 'row_id' not found</span></span></code></pre></div>
+<span><span class="co">#&gt; Empty data.table (0 rows and 27 cols): row_id,anomaly_score,is_outlier,feat_score_mpg,feat_score_cyl,feat_score_disp...</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
