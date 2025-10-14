@@ -202,10 +202,10 @@ evaluate_params <- function(data, params, contamination) {
       model <- do.call(isotree::isolation.forest, model_args)
 
       # Predict anomaly scores
-      scores <- predict(model, data, type = "avg_depth")
+      scores <- stats::predict(model, data, type = "avg_depth")
 
       # Calculate quality metrics
-      threshold <- quantile(scores, probs = 1 - contamination, na.rm = TRUE)
+      threshold <- stats::quantile(scores, probs = 1 - contamination, na.rm = TRUE)
       outliers <- scores > threshold
 
       # Score based on separation between outliers and normal points
@@ -215,7 +215,7 @@ evaluate_params <- function(data, params, contamination) {
       if (length(outlier_scores) > 0 && length(normal_scores) > 0) {
         # Cohen's d effect size for separation
         mean_diff <- mean(outlier_scores, na.rm = TRUE) - mean(normal_scores, na.rm = TRUE)
-        pooled_sd <- sqrt((var(outlier_scores, na.rm = TRUE) + var(normal_scores, na.rm = TRUE)) / 2)
+        pooled_sd <- sqrt((stats::var(outlier_scores, na.rm = TRUE) + stats::var(normal_scores, na.rm = TRUE)) / 2)
 
         if (pooled_sd > 0) {
           cohens_d <- mean_diff / pooled_sd
@@ -225,7 +225,7 @@ evaluate_params <- function(data, params, contamination) {
 
         # Additional metrics
         score_range <- diff(range(scores, na.rm = TRUE))
-        score_variance <- var(scores, na.rm = TRUE)
+        score_variance <- stats::var(scores, na.rm = TRUE)
 
         # Composite score (higher is better)
         quality_score <- cohens_d * 0.6 +
@@ -258,7 +258,7 @@ calculate_metrics <- function(scores, outliers, contamination) {
   # Basic statistics
   metrics <- list(
     mean_score = mean(scores, na.rm = TRUE),
-    median_score = median(scores, na.rm = TRUE),
+    median_score = stats::median(scores, na.rm = TRUE),
     sd_score = sd(scores, na.rm = TRUE),
     min_score = min(scores, na.rm = TRUE),
     max_score = max(scores, na.rm = TRUE)
@@ -274,8 +274,8 @@ calculate_metrics <- function(scores, outliers, contamination) {
 
     # Separation metric (Cohen's d)
     mean_diff <- metrics$mean_outlier_score - metrics$mean_normal_score
-    pooled_sd <- sqrt((var(outlier_scores, na.rm = TRUE) +
-      var(normal_scores, na.rm = TRUE)) / 2)
+    pooled_sd <- sqrt((stats::var(outlier_scores, na.rm = TRUE) +
+      stats::var(normal_scores, na.rm = TRUE)) / 2)
 
     metrics$cohens_d <- if (!is.na(pooled_sd) && pooled_sd > 0) mean_diff / pooled_sd else NA
 

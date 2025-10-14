@@ -161,7 +161,7 @@ plot_feature_importance <- function(x, n_top = 10) {
 
   ggplot2::ggplot(
     plot_dt_filtered,
-    ggplot2::aes(x = reorder(feature, score, FUN = mean), y = score)
+    ggplot2::aes(x = stats::reorder(feature, score, FUN = mean), y = score)
   ) +
     ggplot2::geom_boxplot(fill = "#D55E00", alpha = 0.6, outlier.shape = NA) +
     ggplot2::geom_jitter(width = 0.2, alpha = 0.4, size = 2, color = "#0072B2") +
@@ -250,7 +250,7 @@ plot_pca_outliers <- function(x, n_top = 10) {
   numeric_data <- dt[, .SD, .SDcols = numeric_cols]
 
   # Remove rows with missing values for PCA
-  complete_cases <- complete.cases(numeric_data)
+  complete_cases <- stats::complete.cases(numeric_data)
   numeric_data_complete <- numeric_data[complete_cases, ]
 
   if (nrow(numeric_data_complete) < 10) {
@@ -265,7 +265,7 @@ plot_pca_outliers <- function(x, n_top = 10) {
   }
 
   # Perform PCA
-  pca_result <- prcomp(numeric_data_complete, scale. = TRUE, center = TRUE)
+  pca_result <- stats::prcomp(numeric_data_complete, scale. = TRUE, center = TRUE)
 
   # Create plot data
   plot_dt <- data.table::data.table(
