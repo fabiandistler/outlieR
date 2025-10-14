@@ -21,11 +21,14 @@ tune_parameters <- function(data,
 
   # Define parameter search space
   param_space <- list(
-    ntrees = c(50, 100, 200, 300),
-    sample_size = c(256, 512, 1024, 2048),
-    max_depth = c(8, 10, 12, 15),
-    ndim = c(1, 2, 3)
+    ndim = c(1, 2, 3),
+    ntrees = c(100, 300, 500),
+    prob_pick_avg_gain = c(0, 0.25, 0.5, 0.75, 1),
+    prob_pick_pooled_gain = c(0, 0.25, 0.5, 0.75, 1),
+    ntry = c(1, 5, 10),
+    sample_size = c(128, 256)
   )
+
 
   # Adjust sample_size based on data size
   n_rows <- nrow(data)
@@ -46,13 +49,7 @@ tune_parameters <- function(data,
 #'
 #' @keywords internal
 tune_grid_search <- function(data, param_space, contamination, parallel, verbose) {
-  # Create reduced grid (full grid would be too large)
-  grid <- data.table::CJ(
-    ntrees = param_space$ntrees[c(2, 3)], # 100, 200
-    sample_size = param_space$sample_size[c(1, length(param_space$sample_size))],
-    max_depth = param_space$max_depth[c(2, 3)], # 10, 12
-    ndim = c(1, 2)
-  )
+  grid <- data.table::CJ(param_space)
 
   if (verbose) {
     cli::cli_alert_info("Testing {nrow(grid)} parameter combinations...")
@@ -96,9 +93,6 @@ tune_grid_search <- function(data, param_space, contamination, parallel, verbose
     cli::cli_end()
   }
 
-  # Add ntry parameter (auto)
-  best_params$ntry <- NULL
-
   return(best_params)
 }
 
@@ -118,15 +112,17 @@ tune_random_search <- function(data, param_space, contamination, parallel, verbo
   random_grid <- data.table::data.table(
     ntrees = sample(param_space$ntrees, n_iterations, replace = TRUE),
     sample_size = sample(param_space$sample_size, n_iterations, replace = TRUE),
-    max_depth = sample(param_space$max_depth, n_iterations, replace = TRUE),
-    ndim = sample(param_space$ndim, n_iterations, replace = TRUE)
+    ndim = sample(param_space$ndim, n_iterations, replace = TRUE),
+    prob_pick_avg_gain = sample(param_space$prob_pick_avg_gain, n_iterations, replace = TRUE),
+    prob_pick_pooled_gain = sample(param_space$prob_pick_pooled_gain, n_iterations, replace = TRUE),
+    ntry = sample(param_space$ntry, n_iterations, replace = TRUE)
   )
 
   # Evaluate each combination
   if (parallel && requireNamespace("parallel", quietly = TRUE)) {
     n_cores <- min(parallel::detectCores() - 1, n_iterations)
     cl <- parallel::makeCluster(n_cores)
-    on.exit(parallel::stopCluster(cl))
+    on.exit(parallel::stopCluster(cl), add = TRUE)
 
     parallel::clusterExport(cl, c("data", "contamination"), envir = environment())
     parallel::clusterEvalQ(cl, library(isotree))
@@ -160,7 +156,6 @@ tune_random_search <- function(data, param_space, contamination, parallel, verbo
     cli::cli_end()
   }
 
-  best_params$ntry <- NULL
 
   return(best_params)
 }
@@ -195,13 +190,11 @@ evaluate_params <- function(data, params, contamination) {
         data = data,
         ntrees = params$ntrees,
         sample_size = params$sample_size,
-        max_depth = params$max_depth,
         ndim = params$ndim,
         ntry = params$ntry,
-        prob_pick_pooled_gain = 0.0,
-        prob_pick_avg_gain = 0.0,
-        prob_pick_full_gain = 1.0,
-        prob_pick_dens = 0.0
+        prob_pick_avg_gain = params$prob_pick_avg_gain,
+        prob_pick_pooled_gain = params$prob_pick_pooled_gain,
+        sample_size = params$sample_size
       )
 
       model_args <- model_args[!sapply(model_args, is.null)]
