@@ -12,7 +12,7 @@ coverage](https://codecov.io/gh/fabiandistler/outlieR/graph/badge.svg)](https://
 
 > Automatic Outlier Detection Using Isolation Forests
 
-\[Package Homepage\]<https://fabiandistler.github.io/outlieR/>
+[Package Homepage](https://fabiandistler.github.io/outlieR/)
 
 ## Overview
 

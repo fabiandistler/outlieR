@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 > Automatic Outlier Detection Using Isolation Forests
 
-[Package Homepage]https://fabiandistler.github.io/outlieR/
+[Package Homepage](https://fabiandistler.github.io/outlieR/)
 
 ## Overview
 
