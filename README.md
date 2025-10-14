@@ -9,32 +9,29 @@
 
 > Automatic Outlier Detection Using Isolation Forests
 
-## Übersicht
+## Overview
 
-`outlieR` bietet eine einfache, leistungsstarke API zur automatischen
-Erkennung von Ausreißern in tabellarischen Daten. Das Package nutzt
-Isolation Forests (via `isotree`) mit automatischem
-Hyperparameter-Tuning und liefert detaillierte Diagnosen auf
-Feature-Ebene.
+`outlieR` provides a simple, powerful API for automatic outlier
+detection in tabular data. The package uses Isolation Forests (via
+`isotree`) with automatic hyperparameter tuning and delivers detailed
+feature-level diagnostics.
 
-### Hauptfeatures
+### Main Features
 
-✨ **Einfache API** - Eine Funktion für die meisten Anwendungsfälle 🎯
-**Automatisches Tuning** - Grid Search, Random Search oder Bayesian
-Optimization  
-📊 **Detaillierte Diagnostik** - Feature-Level Outlier-Analyse 📈
-**Umfangreiche Visualisierungen** - Score-Plots, Feature Importance,
-PCA-Projektion 🔧 **Flexibel** - Unterstützt numerische und kategoriale
-Variablen
+✨ **Simple API** - One function for most use cases 🎯 **Automatic
+Tuning** - Grid Search, Random Search, or Bayesian Optimization 📊
+**Detailed Diagnostics** - Feature-level outlier analysis 📈
+**Comprehensive Visualizations** - Score plots, feature importance, PCA
+projection 🔧 **Flexible** - Supports numeric and categorical variables
 
 ## Installation
 
 ``` r
-# Von GitHub installieren (Development Version)
+# Install from GitHub (development version)
 # install.packages("remotes")
 remotes::install_github("fabiandistler/outlieR")
 
-# Von CRAN installieren (sobald verfügbar)
+# Install from CRAN (once available)
 # install.packages("outlieR")
 ```
 
@@ -43,7 +40,7 @@ remotes::install_github("fabiandistler/outlieR")
 ``` r
 library(outlieR)
 
-# Basis-Verwendung: Automatische Outlier-Erkennung
+# Basic usage: Automatic outlier detection
 result <- detect_outliers(mtcars)
 #> ℹ Preprocessing data...
 #> ℹ Tuning hyperparameters using grid search...
@@ -58,7 +55,7 @@ result <- detect_outliers(mtcars)
 #> ✔ Detected 4 outliers (12.5% of data)
 #> ✔ Outlier detection complete!
 
-# Ergebnisse anzeigen
+# Display results
 print(result)
 #> 
 #> === Outlier Detection Results ===
@@ -130,7 +127,7 @@ summary(result)
 #> 3:     14      8.290000                  0
 #> 4:      3      8.141667                  0
 
-# Outlier-Details extrahieren
+# Extract outlier details
 outlier_summary <- get_outlier_summary(result)
 head(outlier_summary)
 #>    row_id anomaly_score is_outlier feat_score_mpg feat_score_cyl
@@ -164,34 +161,34 @@ head(outlier_summary)
 #> 3: 18.00     0     0     3     3
 #> 4: 18.61     1     1     4     1
 
-# Visualisierungen erstellen
-plot(result, type = "score") # Score-Verteilung
+# Create visualizations
+plot(result, type = "score") # Score distribution
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 ``` r
-plot(result, type = "features") # Feature Importance
+plot(result, type = "features") # Feature importance
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-2.png" width="100%" />
 
 ``` r
-plot(result, type = "pca") # PCA-Projektion
+plot(result, type = "pca") # PCA projection
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-3.png" width="100%" />
 
-## Detaillierte Beispiele
+## Detailed Examples
 
-### 1. Spezifische Spalten analysieren
+### 1. Analyze specific columns
 
 ``` r
-# Nur ausgewählte Variablen verwenden
+# Use only selected variables
 result <- detect_outliers(
   data = iris,
   target_cols = c("Sepal.Length", "Sepal.Width", "Petal.Length"),
-  contamination = 0.05 # Erwarte 5% Outliers
+  contamination = 0.05 # Expect 5% outliers
 )
 #> ℹ Preprocessing data...
 #> ℹ Tuning hyperparameters using grid search...
@@ -212,10 +209,10 @@ result <- detect_outliers(
 #> ✔ Outlier detection complete!
 ```
 
-### 2. Ohne automatisches Tuning
+### 2. Without automatic tuning
 
 ``` r
-# Manuelle Parameter-Spezifikation für mehr Kontrolle
+# Manually specify parameters for more control
 result <- detect_outliers(
   data = mtcars,
   tune = FALSE,
@@ -238,23 +235,23 @@ result <- detect_outliers(
 #> ✔ Outlier detection complete!
 ```
 
-### 3. Verschiedene Tuning-Methoden
+### 3. Different tuning methods
 
 ``` r
-# Grid Search (default, systematisch aber langsamer)
+# Grid Search (default, systematic but slower)
 result_grid <- detect_outliers(mtcars, tune_method = "grid")
 
-# Random Search (schneller, gute Ergebnisse)
+# Random Search (faster, good results)
 result_random <- detect_outliers(mtcars, tune_method = "random")
 
-# Bayesian Optimization (experimentell)
+# Bayesian Optimization (experimental)
 result_bayes <- detect_outliers(mtcars, tune_method = "bayesian")
 ```
 
-### 4. Mit kategorischen Variablen
+### 4. With categorical variables
 
 ``` r
-# Automatische One-Hot-Encoding von Faktoren
+# Automatic one-hot encoding of factors
 set.seed(42)
 data <- data.frame(
   value1 = rnorm(100),
@@ -278,7 +275,7 @@ result <- detect_outliers(data)
 #> ✔ Outlier detection complete!
 ```
 
-### 5. Detaillierte Outlier-Analyse
+### 5. Detailed outlier analysis
 
 ``` r
 result <- detect_outliers(mtcars)
@@ -295,7 +292,7 @@ result <- detect_outliers(mtcars)
 #> ✔ Detected 4 outliers (12.5% of data)
 #> ✔ Outlier detection complete!
 
-# Welche Features sind in Zeile 31 auffällig?
+# Which features are suspicious in row 31?
 detailed <- get_outlier_summary(result, detailed = TRUE)
 detailed[row_id == 31]
 #> Empty data.table (0 rows and 27 cols): row_id,anomaly_score,is_outlier,feat_score_mpg,feat_score_cyl,feat_score_disp...
@@ -304,87 +301,85 @@ detailed[row_id == 31]
 ## Performance
 
 ``` r
-# Benchmark auf verschiedenen Datengrößen
+# Benchmark on different data sizes
 library(bench)
 
-# Kleiner Datensatz (1000 Zeilen)
+# Small dataset (1000 rows)
 small_data <- data.frame(matrix(rnorm(1000 * 10), ncol = 10))
 mark(detect_outliers(small_data, tune = FALSE))
 # ~500ms
 
-# Mittlerer Datensatz (10000 Zeilen)
+# Medium dataset (10000 rows)
 medium_data <- data.frame(matrix(rnorm(10000 * 10), ncol = 10))
 mark(detect_outliers(medium_data, tune = FALSE))
 # ~2s
 
-# Mit Tuning (langsamer, aber bessere Ergebnisse)
+# With tuning (slower but better results)
 mark(detect_outliers(medium_data, tune = TRUE, tune_method = "random"))
-# ~20s (parallel auf 4 Cores)
+# ~20s (parallel on 4 cores)
 ```
 
-## Erweiterte Verwendung
+## Advanced Usage
 
-### Custom-Threshold
+### Custom Threshold
 
 ``` r
 result <- detect_outliers(mtcars, contamination = 0.05)
 
-# Eigenen Threshold verwenden
+# Use a custom threshold
 custom_threshold <- quantile(result$scores, 0.99)
 custom_outliers <- result$scores > custom_threshold
 
-# Neue Details generieren
+# Generate new details
 result$outliers <- custom_outliers
 result$threshold <- custom_threshold
 ```
 
 ## Troubleshooting
 
-### Zu viele/wenige Outliers
+### Too many/few outliers
 
 ``` r
-# Contamination-Parameter anpassen
-result <- detect_outliers(data, contamination = 0.05) # Weniger Outliers
-result <- detect_outliers(data, contamination = 0.15) # Mehr Outliers
+# Adjust contamination parameter
+result <- detect_outliers(data, contamination = 0.05) # Fewer outliers
+result <- detect_outliers(data, contamination = 0.15) # More outliers
 ```
 
-### Schlechte Trennung
+### Poor separation
 
 ``` r
-# Mehr Bäume verwenden
+# Use more trees
 result <- detect_outliers(data, n_trees = 300)
 
-# Tuning aktivieren für bessere Parameter
+# Enable tuning for better parameters
 result <- detect_outliers(data, tune = TRUE, tune_method = "random")
 ```
 
-### Memory-Probleme bei großen Daten
+### Memory issues with large data
 
 ``` r
-# Paralleles Processing deaktivieren
+# Disable parallel processing
 result <- detect_outliers(large_data, parallel = FALSE)
 
-# Weniger Bäume
+# Fewer trees
 result <- detect_outliers(large_data, n_trees = 50, tune = FALSE)
 ```
 
-## Mitwirken
+## Contributing
 
-Contributions sind willkommen! Bitte:
+Contributions are welcome! Please:
 
-1.  Fork das Repository
-2.  Erstelle einen Feature-Branch
-    (`git checkout -b feature/AmazingFeature`)
-3.  Committe deine Änderungen
-    (`git commit -m 'Add some AmazingFeature'`)
-4.  Push zum Branch (`git push origin feature/AmazingFeature`)
-5.  Öffne einen Pull Request
+1.  Fork the repository
+2.  Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the branch (`git push origin feature/AmazingFeature`)
+5.  Open a pull request
 
-## Lizenz
+## License
 
-MIT License - siehe [LICENSE](LICENSE) Datei für Details.
+MIT License – see [LICENSE](LICENSE) file for details.
 
-## Danksagungen
+## Acknowledgements
 
-- `isotree` Package für die Isolation Forest Implementierung
-- R Community für Feedback und Inspiration
+- `isotree` package for the Isolation Forest implementation
+- R community for feedback and inspiration

@@ -18,22 +18,22 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Einführung
+# Introduction
 
-`outlieR` bietet eine einfache, aber leistungsstarke Schnittstelle zur automatischen Erkennung von Ausreißern in tabellarischen Daten. Das Package nutzt Isolation Forests über das `isotree`-Package und erweitert es um:
+`outlieR` provides a simple yet powerful interface for automatic outlier detection in tabular data. The package leverages Isolation Forests via the `isotree` package and extends it with:
 
-- **Automatisches Hyperparameter-Tuning**
-- **Detaillierte Feature-Level-Analyse**
-- **Umfangreiche Visualisierungen**
-- **data.table-basierte Performance**
+* **Automatic hyperparameter tuning**
+* **Detailed feature-level analysis**
+* **Comprehensive visualizations**
+* **data.table-based performance**
 
 ## Installation
 
 ```{r eval=FALSE}
-# Development Version von GitHub
+# Development version from GitHub
 remotes::install_github("fabiandistler/outlieR")
 
-# CRAN (sobald verfügbar)
+# CRAN (once available)
 install.packages("outlieR")
 ```
 
@@ -41,74 +41,74 @@ install.packages("outlieR")
 library(outlieR)
 ```
 
-# Basis-Verwendung
+# Basic Usage
 
-## Einfachstes Beispiel
+## Simplest Example
 
-Die Hauptfunktion `detect_outliers()` macht es extrem einfach, Ausreißer zu finden:
+The main function `detect_outliers()` makes it extremely easy to find outliers:
 
 ```{r}
-# Standard-Verwendung mit mtcars Dataset
+# Standard usage with mtcars dataset
 result <- detect_outliers(mtcars, verbose = FALSE)
 
-# Ergebnis anschauen
+# View result
 print(result)
 ```
 
-## Outlier-Details extrahieren
+## Extracting Outlier Details
 
 ```{r}
-# Zusammenfassung der Outliers
+# Summary of outliers
 summary_dt <- get_outlier_summary(result, detailed = FALSE)
 head(summary_dt)
 
-# Detaillierte Information mit Feature-Scores
+# Detailed information with feature scores
 detailed_dt <- get_outlier_summary(result, detailed = TRUE)
 head(detailed_dt, 3)
 ```
 
-## Visualisierungen
+## Visualizations
 
 ```{r fig.width=7, fig.height=5}
-# Score-Verteilung
+# Score distribution
 plot(result, type = "score")
 ```
 
 ```{r fig.width=7, fig.height=5}
-# Feature Importance für Outliers
+# Feature importance for outliers
 plot(result, type = "features")
 ```
 
 ```{r fig.width=7, fig.height=5}
-# Verteilung der Scores
+# Distribution of scores
 plot(result, type = "distribution")
 ```
 
 ```{r fig.width=7, fig.height=5}
-# PCA-Projektion
+# PCA projection
 plot(result, type = "pca")
 ```
 
-# Erweiterte Verwendung
+# Advanced Usage
 
-## Spezifische Spalten analysieren
+## Analyze Specific Columns
 
 ```{r}
-# Nur ausgewählte Features verwenden
+# Use only selected features
 result_subset <- detect_outliers(
   data = iris,
   target_cols = c("Sepal.Length", "Sepal.Width", "Petal.Length"),
-  contamination = 0.05,  # Erwarte 5% Outliers
+  contamination = 0.05, # Expect 5% outliers
   verbose = FALSE
 )
 
 get_outlier_summary(result_subset, detailed = FALSE)
 ```
 
-## Automatisches Hyperparameter-Tuning
+## Automatic Hyperparameter Tuning
 
 ```{r}
-# Grid Search (systematisch, alle Kombinationen)
+# Grid Search (systematic, all combinations)
 result_grid <- detect_outliers(
   mtcars,
   tune = TRUE,
@@ -117,7 +117,7 @@ result_grid <- detect_outliers(
   verbose = FALSE
 )
 
-# Random Search (schneller, gute Ergebnisse)
+# Random Search (faster, good results)
 result_random <- detect_outliers(
   mtcars,
   tune = TRUE,
@@ -126,17 +126,17 @@ result_random <- detect_outliers(
   verbose = FALSE
 )
 
-# Parameter vergleichen
-cat("Grid Search Parameter:\n")
+# Compare parameters
+cat("Grid Search Parameters:\n")
 print(result_grid$params)
 
-cat("\nRandom Search Parameter:\n")
+cat("\nRandom Search Parameters:\n")
 print(result_random$params)
 ```
 
-## Manuelle Parameter-Kontrolle
+## Manual Parameter Control
 
-Für maximale Kontrolle können Sie das Tuning deaktivieren:
+For maximum control, you can disable tuning:
 
 ```{r}
 result_manual <- detect_outliers(
@@ -151,12 +151,12 @@ result_manual <- detect_outliers(
 print(result_manual$params)
 ```
 
-# Arbeiten mit kategorischen Variablen
+# Working with Categorical Variables
 
-`outlieR` verarbeitet automatisch kategorische Variablen mittels One-Hot-Encoding:
+`outlieR` automatically handles categorical variables via one-hot encoding:
 
 ```{r}
-# Beispiel-Datensatz mit kategorischen Variablen
+# Example dataset with categorical variables
 set.seed(123)
 mixed_data <- data.frame(
   numeric1 = rnorm(100),
@@ -165,34 +165,34 @@ mixed_data <- data.frame(
   binary = sample(c("Yes", "No"), 100, replace = TRUE)
 )
 
-# Automatische Erkennung und Encoding
+# Automatic detection and encoding
 result_mixed <- detect_outliers(mixed_data, verbose = FALSE)
 
-# Preprocessing-Information anzeigen
-cat("Original Spalten:", result_mixed$preprocessing$original_cols, "\n")
-cat("Kategorische Spalten:", result_mixed$preprocessing$categorical_cols, "\n")
-cat("Verarbeitete Spalten:", result_mixed$preprocessing$processed_cols, "\n")
+# Display preprocessing information
+cat("Original columns:", result_mixed$preprocessing$original_cols, "\n")
+cat("Categorical columns:", result_mixed$preprocessing$categorical_cols, "\n")
+cat("Processed columns:", result_mixed$preprocessing$processed_cols, "\n")
 ```
 
 # data.table Integration
 
-`outlieR` ist für effiziente Arbeit mit `data.table` optimiert:
+`outlieR` is optimized for efficient work with `data.table`:
 
 ```{r}
 library(data.table)
 
-# Mit data.table arbeiten
+# Work with data.table
 dt <- as.data.table(mtcars)
 result <- detect_outliers(dt, verbose = FALSE)
 
-# Outlier-Flag zur Tabelle hinzufügen
+# Add outlier flag to the table
 dt[, is_outlier := result$outliers]
 dt[, anomaly_score := result$scores]
 
-# Outliers analysieren
+# Analyze outliers
 dt[is_outlier == TRUE, .SD, .SDcols = c("mpg", "cyl", "hp", "anomaly_score")]
 
-# Aggregationen
+# Aggregations
 dt[, .(
   mean_mpg = mean(mpg),
   mean_hp = mean(hp),
@@ -200,20 +200,20 @@ dt[, .(
 ), by = is_outlier]
 ```
 
-# Praktische Workflows
+# Practical Workflows
 
-## Workflow 1: Datenqualitäts-Check
+## Workflow 1: Data Quality Check
 
 ```{r}
-# Funktion für schnellen Qualitäts-Check
+# Function for quick quality check
 quality_check <- function(data, contamination = 0.05) {
   result <- detect_outliers(
     data,
     contamination = contamination,
-    tune = FALSE,  # Schneller für Quick-Check
+    tune = FALSE, # Faster for quick check
     verbose = FALSE
   )
-  
+
   list(
     n_outliers = sum(result$outliers),
     pct_outliers = 100 * mean(result$outliers),
@@ -222,19 +222,19 @@ quality_check <- function(data, contamination = 0.05) {
   )
 }
 
-# Anwenden
+# Apply
 qc_result <- quality_check(mtcars)
 print(qc_result$top_outliers)
 ```
 
-## Workflow 2: Iterative Bereinigung
+## Workflow 2: Iterative Cleaning
 
 ```{r}
-# Iterativ Outliers entfernen und neu bewerten
+# Iteratively remove outliers and reassess
 iterative_cleaning <- function(data, max_iterations = 3, contamination = 0.1) {
   clean_data <- data
   removed_indices <- integer()
-  
+
   for (i in seq_len(max_iterations)) {
     result <- detect_outliers(
       clean_data,
@@ -242,20 +242,20 @@ iterative_cleaning <- function(data, max_iterations = 3, contamination = 0.1) {
       tune = FALSE,
       verbose = FALSE
     )
-    
+
     n_outliers <- sum(result$outliers)
     if (n_outliers == 0) break
-    
-    # Indices im Original-Datensatz tracken
+
+    # Track indices in original dataset
     outlier_rows <- which(result$outliers)
     removed_indices <- c(removed_indices, outlier_rows)
-    
-    # Outliers entfernen
+
+    # Remove outliers
     clean_data <- clean_data[!result$outliers, ]
-    
-    cat(sprintf("Iteration %d: %d Outliers entfernt\n", i, n_outliers))
+
+    cat(sprintf("Iteration %d: %d outliers removed\n", i, n_outliers))
   }
-  
+
   list(
     clean_data = clean_data,
     removed_indices = removed_indices,
@@ -263,24 +263,26 @@ iterative_cleaning <- function(data, max_iterations = 3, contamination = 0.1) {
   )
 }
 
-# Beispiel (mit kleinem contamination-Wert)
+# Example (with small contamination value)
 cleaned <- iterative_cleaning(mtcars, contamination = 0.05)
-cat(sprintf("\nGesamt entfernt: %d Zeilen\n", cleaned$n_removed))
+cat(sprintf("\nTotal removed: %d rows\n", cleaned$n_removed))
 ```
 
-## Workflow 3: Feature-spezifische Analyse
+## Workflow 3: Feature-Specific Analysis
 
 ```{r}
-# Welche Features sind am häufigsten outlier-verdächtig?
+# Which features are most frequently flagged as outliers?
 analyze_feature_outliers <- function(result) {
   dt <- as.data.table(result$outlier_details)
-  
-  # Feature-Score-Spalten extrahieren
+
+  # Extract feature score columns
   score_cols <- grep("^feat_score_", names(dt), value = TRUE)
-  
-  if (length(score_cols) == 0) return(NULL)
-  
-  # Für jeden Feature: Anzahl der Beobachtungen mit hohem Score (>3)
+
+  if (length(score_cols) == 0) {
+    return(NULL)
+  }
+
+  # For each feature: count observations with high score (>3)
   feature_stats <- lapply(score_cols, function(col) {
     col_clean <- gsub("^feat_score_", "", col)
     scores <- dt[[col]]
@@ -291,7 +293,7 @@ analyze_feature_outliers <- function(result) {
       max_score = max(scores, na.rm = TRUE)
     )
   })
-  
+
   feature_dt <- rbindlist(feature_stats)
   feature_dt[order(-n_high_score)]
 }
@@ -301,96 +303,106 @@ feature_analysis <- analyze_feature_outliers(result)
 head(feature_analysis, 10)
 ```
 
-# Performance-Tipps
+# Performance Tips
 
-## Für große Datensätze
+## For Large Datasets
 
 ```{r eval=FALSE}
-# Bei großen Daten (>100k Zeilen):
+# For large data (>100k rows):
 result <- detect_outliers(
   large_data,
-  tune = FALSE,           # Kein Tuning für Geschwindigkeit
-  n_trees = 100,          # Moderate Anzahl Bäume
-  sample_size = 2048,     # Größere Samples
-  parallel = TRUE,        # Parallel-Processing
-  verbose = TRUE          # Progress-Tracking
+  tune = FALSE, # No tuning for speed
+  n_trees = 100, # Moderate number of trees
+  sample_size = 2048, # Larger samples
+  parallel = TRUE, # Parallel processing
+  verbose = TRUE # Progress tracking
 )
 ```
 
-## Tuning optimieren
+## Optimize Tuning
 
 ```{r eval=FALSE}
-# Schnelles Tuning mit Random Search
+# Fast tuning with random search
 result <- detect_outliers(
   data,
   tune = TRUE,
-  tune_method = "random",  # Schneller als Grid
+  tune_method = "random", # Faster than grid
   parallel = TRUE,
   verbose = TRUE
 )
 ```
 
-## Memory-Management
+## Memory Management
 
 ```{r eval=FALSE}
-# Für sehr große Datensätze: data.table verwenden
+# For very large datasets: use data.table
 library(data.table)
-dt <- fread("large_file.csv")  # Effizientes Einlesen
+dt <- fread("large_file.csv") # Efficient loading
 
 result <- detect_outliers(
   dt,
-  target_cols = c("col1", "col2", "col3"),  # Nur relevante Spalten
+  target_cols = c("col1", "col2", "col3"), # Only relevant columns
   tune = FALSE,
   verbose = TRUE
 )
 
-# Original-Daten werden nicht im Result gespeichert bei >10k Zeilen
+# Original data is not stored in the result for >10k rows
 ```
 
-# Metriken und Interpretation
+# Metrics and Interpretation
 
-## Anomaly Scores verstehen
+## Understanding Anomaly Scores
 
 ```{r}
 result <- detect_outliers(mtcars, verbose = FALSE)
 
-# Score-Statistiken
-cat("Score Range:", range(result$scores), "\n")
-cat("Score Mean:", mean(result$scores), "\n")
+# Score statistics
+cat("Score range:", range(result$scores), "\n")
+cat("Score mean:", mean(result$scores), "\n")
 cat("Score SD:", sd(result$scores), "\n")
 cat("Threshold:", result$threshold, "\n")
 
-# Metriken ansehen
+# View metrics
 print(result$metrics)
 ```
 
-### Interpretation der Metriken
+### Interpreting Metrics
 
-- **mean_score**: Durchschnittlicher Anomaly-Score
-- **cohens_d**: Effektstärke der Trennung (>0.8 = stark)
-- **outlier_separation**: Normalisierte Trennung zwischen Outliers und Normal
-- **detection_rate**: Tatsächlicher Anteil erkannter Outliers
+* **mean_score**: Average anomaly score
+* **cohens_d**: Effect size of separation (>0.8 = strong)
+* **outlier_separation**: Normalized separation between outliers and normal points
+* **detection_rate**: Actual proportion of detected outliers
 
 ## Cohen's d Interpretation
 
 ```{r}
 interpret_cohens_d <- function(d) {
-  if (is.na(d)) return("Keine Outliers gefunden")
-  if (d < 0.2) return("Sehr schwache Trennung")
-  if (d < 0.5) return("Schwache Trennung")
-  if (d < 0.8) return("Moderate Trennung")
-  "Starke Trennung"
+  if (is.na(d)) {
+    return("No outliers found")
+  }
+  if (d < 0.2) {
+    return("Very weak separation")
+  }
+  if (d < 0.5) {
+    return("Weak separation")
+  }
+  if (d < 0.8) {
+    return("Moderate separation")
+  }
+  "Strong separation"
 }
 
 result <- detect_outliers(mtcars, verbose = FALSE)
-cat("Trennungs-Qualität:", 
-    interpret_cohens_d(result$metrics$cohens_d), "\n")
+cat(
+  "Separation quality:",
+  interpret_cohens_d(result$metrics$cohens_d), "\n"
+)
 ```
 
-# Vergleich verschiedener Ansätze
+# Comparing Different Approaches
 
 ```{r}
-# Verschiedene contamination-Werte testen
+# Test different contamination values
 contaminations <- c(0.05, 0.10, 0.15)
 
 comparison <- lapply(contaminations, function(cont) {
@@ -400,7 +412,7 @@ comparison <- lapply(contaminations, function(cont) {
     tune = FALSE,
     verbose = FALSE
   )
-  
+
   data.table(
     contamination = cont,
     n_outliers = sum(result$outliers),
@@ -413,31 +425,31 @@ comparison_dt <- rbindlist(comparison)
 print(comparison_dt)
 ```
 
-# Häufige Anwendungsfälle
+# Common Use Cases
 
 ## 1. Fraud Detection
 
 ```{r eval=FALSE}
-# Transaktions-Daten auf verdächtige Muster prüfen
+# Check transaction data for suspicious patterns
 transactions <- fread("transactions.csv")
 
 result <- detect_outliers(
   transactions,
   target_cols = c("amount", "frequency", "location_distance"),
-  contamination = 0.01,  # Niedrig für Fraud (1%)
+  contamination = 0.01, # Low for fraud (1%)
   tune = TRUE,
   verbose = TRUE
 )
 
-# Verdächtige Transaktionen für Review extrahieren
+# Extract suspicious transactions for review
 suspicious <- get_outlier_summary(result)
 fwrite(suspicious, "suspicious_transactions.csv")
 ```
 
-## 2. Sensor-Daten-Validierung
+## 2. Sensor Data Validation
 
 ```{r eval=FALSE}
-# IoT Sensor-Readings prüfen
+# Check IoT sensor readings
 sensor_data <- fread("sensor_readings.csv")
 
 result <- detect_outliers(
@@ -448,14 +460,14 @@ result <- detect_outliers(
   n_trees = 200
 )
 
-# Fehlerhafte Readings identifizieren
+# Identify faulty readings
 faulty_readings <- sensor_data[result$outliers, ]
 ```
 
-## 3. Kunden-Segmentierung
+## 3. Customer Segmentation
 
 ```{r eval=FALSE}
-# Ungewöhnliche Kunden-Verhaltensmuster finden
+# Find unusual customer behavior patterns
 customer_data <- fread("customer_behavior.csv")
 
 result <- detect_outliers(
@@ -466,68 +478,68 @@ result <- detect_outliers(
   tune_method = "random"
 )
 
-# VIP oder Risiko-Kunden identifizieren
+# Identify VIP or risk customers
 unusual_customers <- customer_data[result$outliers, ]
 ```
 
 # Best Practices
 
-## 1. Explorative Datenanalyse zuerst
+## 1. Perform Exploratory Data Analysis First
 
 ```{r eval=FALSE}
-# Daten verstehen bevor Outlier-Detection
+# Understand data before outlier detection
 summary(your_data)
-plot(your_data)  # Base R plots
-cor(your_data[, numeric_cols])  # Korrelationen
+plot(your_data) # Base R plots
+cor(your_data[, numeric_cols]) # Correlations
 ```
 
-## 2. contamination Parameter anpassen
+## 2. Adjust the contamination Parameter
 
 ```{r eval=FALSE}
-# Start mit Domain-Wissen
+# Start with domain knowledge
 # - Fraud: 0.01 - 0.05
 # - Quality Control: 0.05 - 0.10
 # - General Exploration: 0.10 - 0.15
 
-# Dann iterativ anpassen basierend auf Ergebnissen
+# Then adjust iteratively based on results
 ```
 
-## 3. Visualisierungen nutzen
+## 3. Use Visualizations
 
 ```{r eval=FALSE}
 result <- detect_outliers(your_data)
 
-# Alle Plots anschauen
+# View all plots
 plots <- plot(result, type = "all")
 
-# Feature Importance besonders wichtig
+# Feature importance is particularly useful
 plot(result, type = "features")
 ```
 
-## 4. Ergebnisse validieren
+## 4. Validate Results
 
 ```{r eval=FALSE}
-# Outliers manuell prüfen
+# Manually review outliers
 outliers <- get_outlier_summary(result)
 View(your_data[outliers$row_id, ])
 
-# Mit Domain-Experten diskutieren
-# Sind die Outliers sinnvoll?
+# Discuss with domain experts
+# Are the outliers meaningful?
 ```
 
-# Zusammenfassung
+# Summary
 
-`outlieR` bietet eine vollständige Lösung für Outlier-Detection:
+`outlieR` provides a complete solution for outlier detection:
 
-- ✅ **Einfache API**: Eine Funktion für die meisten Fälle
-- ✅ **Automatisches Tuning**: Oder manuelle Kontrolle
-- ✅ **Detaillierte Diagnostik**: Feature-Level-Analyse
-- ✅ **Visualisierungen**: Mehrere Plot-Typen
-- ✅ **data.table Integration**: Performant und flexibel
-- ✅ **Reproduzierbar**: Seed-Support
+* ✅ **Simple API**: One function for most cases
+* ✅ **Automatic tuning**: Or manual control
+* ✅ **Detailed diagnostics**: Feature-level analysis
+* ✅ **Visualizations**: Multiple plot types
+* ✅ **data.table integration**: Fast and flexible
+* ✅ **Reproducible**: Seed support
 
-Für weitere Informationen siehe:
+For more information, see:
 
-- `?detect_outliers` für vollständige Parameter-Dokumentation
-- [GitHub Issues](https://github.com/yourusername/outlieR/issues) für Fragen
-- [Vignettes](https://github.com/yourusername/outlieR/vignettes) für mehr Beispiele
+* `?detect_outliers` for full parameter documentation
+* [GitHub Issues](https://github.com/yourusername/outlieR/issues) for questions
+* [Vignettes](https://github.com/yourusername/outlieR/vignettes) for more examples
