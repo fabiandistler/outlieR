@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 # outlieR
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/fabiandistler/outlieR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fabiandistler/outlieR/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/fabiandistler/outlieR/graph/badge.svg)](https://app.codecov.io/gh/fabiandistler/outlieR)
 <!-- badges: end -->
 
 > Automatic Outlier Detection Using Isolation Forests

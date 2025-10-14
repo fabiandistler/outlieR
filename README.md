@@ -1,30 +1,34 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+
 
 # outlieR
 
 <!-- badges: start -->
-
+[![R-CMD-check](https://github.com/fabiandistler/outlieR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fabiandistler/outlieR/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/fabiandistler/outlieR/graph/badge.svg)](https://app.codecov.io/gh/fabiandistler/outlieR)
 <!-- badges: end -->
 
 > Automatic Outlier Detection Using Isolation Forests
 
 ## Overview
 
-`outlieR` provides a simple, powerful API for automatic outlier
-detection in tabular data. The package uses Isolation Forests (via
-`isotree`) with automatic hyperparameter tuning and delivers detailed
-feature-level diagnostics.
+`outlieR` provides a simple, powerful API for automatic outlier detection in tabular data. The package uses Isolation Forests (via `isotree`) with automatic hyperparameter tuning and delivers detailed feature-level diagnostics.
 
 ### Main Features
 
-✨ **Simple API** - One function for most use cases 🎯 **Automatic
-Tuning** - Grid Search, Random Search, or Bayesian Optimization 📊
-**Detailed Diagnostics** - Feature-level outlier analysis 📈
-**Comprehensive Visualizations** - Score plots, feature importance, PCA
-projection 🔧 **Flexible** - Supports numeric and categorical variables
+✨ **Simple API** - One function for most use cases
+🎯 **Automatic Tuning** - Grid Search, Random Search, or Bayesian Optimization
+📊 **Detailed Diagnostics** - Feature-level outlier analysis
+📈 **Comprehensive Visualizations** - Score plots, feature importance, PCA projection
+🔧 **Flexible** - Supports numeric and categorical variables
 
 ## Installation
+
 
 ``` r
 # Install from GitHub (development version)
@@ -36,6 +40,7 @@ remotes::install_github("fabiandistler/outlieR")
 ```
 
 ## Quick Start
+
 
 ``` r
 library(outlieR)
@@ -120,68 +125,114 @@ summary(result)
 #> Use get_outlier_summary() to see detailed outlier information
 #> 
 #> Top 10 Outliers:
-#>    row_id anomaly_score n_outlier_features
-#>     <int>         <num>              <int>
-#> 1:     23      8.406667                  0
-#> 2:     12      8.296667                  0
-#> 3:     14      8.290000                  0
-#> 4:      3      8.141667                  0
+#>    row_id anomaly_score
+#>     <int>         <num>
+#> 1:     23      8.406667
+#> 2:     12      8.296667
+#> 3:     14      8.290000
+#> 4:      3      8.141667
+#>    n_outlier_features
+#>                 <int>
+#> 1:                  0
+#> 2:                  0
+#> 3:                  0
+#> 4:                  0
 
 # Extract outlier details
 outlier_summary <- get_outlier_summary(result)
 head(outlier_summary)
-#>    row_id anomaly_score is_outlier feat_score_mpg feat_score_cyl
-#>     <int>         <num>     <lgcl>          <num>          <num>
-#> 1:     23      8.406667       TRUE      0.7391680      0.6744908
-#> 2:     12      8.296667       TRUE      0.5174176      0.6744908
-#> 3:     14      8.290000       TRUE      0.7391680      0.6744908
-#> 4:      3      8.141667       TRUE      0.6652512      0.6744908
-#>    feat_score_disp feat_score_hp feat_score_drat feat_score_wt feat_score_qsec
-#>              <num>         <num>           <num>         <num>           <num>
-#> 1:       0.7666771     0.3502164       0.7738894     0.1433700       0.2895719
-#> 2:       0.5659316     0.7393456       0.8874878     0.9710060       0.2189446
-#> 3:       0.5659316     0.7393456       0.8874878     0.5930305       0.2048192
-#> 4:       0.6285756     0.3891293       0.2200970     1.3098806       0.6356457
-#>    feat_score_vs feat_score_am feat_score_gear feat_score_carb
-#>            <num>         <num>           <num>           <num>
-#> 1:             0             0       0.6744908       0.0000000
-#> 2:             0             0       0.6744908       0.6744908
-#> 3:             0             0       0.6744908       0.6744908
-#> 4:             0             0       0.0000000       0.6744908
-#>    n_outlier_features top_outlier_features   mpg   cyl  disp    hp  drat    wt
-#>                 <int>               <char> <num> <num> <num> <num> <num> <num>
-#> 1:                  0      drat, disp, mpg  15.2     8 304.0   150  3.15 3.435
-#> 2:                  0         wt, drat, hp  16.4     8 275.8   180  3.07 4.070
-#> 3:                  0        drat, hp, mpg  15.2     8 275.8   180  3.07 3.780
-#> 4:                  0        wt, cyl, carb  22.8     4 108.0    93  3.85 2.320
-#>     qsec    vs    am  gear  carb
+#>    row_id anomaly_score is_outlier
+#>     <int>         <num>     <lgcl>
+#> 1:     23      8.406667       TRUE
+#> 2:     12      8.296667       TRUE
+#> 3:     14      8.290000       TRUE
+#> 4:      3      8.141667       TRUE
+#>    feat_score_mpg feat_score_cyl
+#>             <num>          <num>
+#> 1:      0.7391680      0.6744908
+#> 2:      0.5174176      0.6744908
+#> 3:      0.7391680      0.6744908
+#> 4:      0.6652512      0.6744908
+#>    feat_score_disp feat_score_hp
+#>              <num>         <num>
+#> 1:       0.7666771     0.3502164
+#> 2:       0.5659316     0.7393456
+#> 3:       0.5659316     0.7393456
+#> 4:       0.6285756     0.3891293
+#>    feat_score_drat feat_score_wt
+#>              <num>         <num>
+#> 1:       0.7738894     0.1433700
+#> 2:       0.8874878     0.9710060
+#> 3:       0.8874878     0.5930305
+#> 4:       0.2200970     1.3098806
+#>    feat_score_qsec feat_score_vs
+#>              <num>         <num>
+#> 1:       0.2895719             0
+#> 2:       0.2189446             0
+#> 3:       0.2048192             0
+#> 4:       0.6356457             0
+#>    feat_score_am feat_score_gear
+#>            <num>           <num>
+#> 1:             0       0.6744908
+#> 2:             0       0.6744908
+#> 3:             0       0.6744908
+#> 4:             0       0.0000000
+#>    feat_score_carb n_outlier_features
+#>              <num>              <int>
+#> 1:       0.0000000                  0
+#> 2:       0.6744908                  0
+#> 3:       0.6744908                  0
+#> 4:       0.6744908                  0
+#>    top_outlier_features   mpg   cyl
+#>                  <char> <num> <num>
+#> 1:      drat, disp, mpg  15.2     8
+#> 2:         wt, drat, hp  16.4     8
+#> 3:        drat, hp, mpg  15.2     8
+#> 4:        wt, cyl, carb  22.8     4
+#>     disp    hp  drat    wt  qsec
 #>    <num> <num> <num> <num> <num>
-#> 1: 17.30     0     0     3     2
-#> 2: 17.40     0     0     3     3
-#> 3: 18.00     0     0     3     3
-#> 4: 18.61     1     1     4     1
+#> 1: 304.0   150  3.15 3.435 17.30
+#> 2: 275.8   180  3.07 4.070 17.40
+#> 3: 275.8   180  3.07 3.780 18.00
+#> 4: 108.0    93  3.85 2.320 18.61
+#>       vs    am  gear  carb
+#>    <num> <num> <num> <num>
+#> 1:     0     0     3     2
+#> 2:     0     0     3     3
+#> 3:     0     0     3     3
+#> 4:     1     1     4     1
 
 # Create visualizations
 plot(result, type = "score") # Score distribution
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<div class="figure">
+<img src="man/figures/README-unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-3</p>
+</div>
 
 ``` r
 plot(result, type = "features") # Feature importance
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-2.png" width="100%" />
+<div class="figure">
+<img src="man/figures/README-unnamed-chunk-3-2.png" alt="plot of chunk unnamed-chunk-3" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-3</p>
+</div>
 
 ``` r
 plot(result, type = "pca") # PCA projection
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-3.png" width="100%" />
+<div class="figure">
+<img src="man/figures/README-unnamed-chunk-3-3.png" alt="plot of chunk unnamed-chunk-3" width="100%" />
+<p class="caption">plot of chunk unnamed-chunk-3</p>
+</div>
 
 ## Detailed Examples
 
 ### 1. Analyze specific columns
+
 
 ``` r
 # Use only selected variables
@@ -199,17 +250,24 @@ result <- detect_outliers(
 #> • max_depth: 12
 #> • ndim: 1
 #> ℹ Training isolation forest model...
-#> Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =
-#> 500, : Passed parameters for deterministic single-variable splits with no
-#> sub-sampling. Every tree fitted will end up doing exactly the same splits. It's
-#> recommended to set non-random split probabilities to less than 1, or to use the
-#> extended model (ndim > 1).
+#> Warning in (function (data,
+#> sample_size = min(nrow(data),
+#> 10000L), ntrees = 500, : Passed
+#> parameters for deterministic
+#> single-variable splits with no
+#> sub-sampling. Every tree fitted will
+#> end up doing exactly the same splits.
+#> It's recommended to set non-random
+#> split probabilities to less than 1,
+#> or to use the extended model (ndim >
+#> 1).
 #> ℹ Computing anomaly scores...
 #> ✔ Detected 8 outliers (5.33% of data)
 #> ✔ Outlier detection complete!
 ```
 
 ### 2. Without automatic tuning
+
 
 ``` r
 # Manually specify parameters for more control
@@ -222,20 +280,30 @@ result <- detect_outliers(
 )
 #> ℹ Preprocessing data...
 #> ℹ Training isolation forest model...
-#> Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =
-#> 500, : 'sample_size' is larger than the number of rows in 'data', will be
+#> Warning in (function (data,
+#> sample_size = min(nrow(data),
+#> 10000L), ntrees = 500, :
+#> 'sample_size' is larger than the
+#> number of rows in 'data', will be
 #> decreased.
-#> Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =
-#> 500, : Passed parameters for deterministic single-variable splits with no
-#> sub-sampling. Every tree fitted will end up doing exactly the same splits. It's
-#> recommended to set non-random split probabilities to less than 1, or to use the
-#> extended model (ndim > 1).
+#> Warning in (function (data,
+#> sample_size = min(nrow(data),
+#> 10000L), ntrees = 500, : Passed
+#> parameters for deterministic
+#> single-variable splits with no
+#> sub-sampling. Every tree fitted will
+#> end up doing exactly the same splits.
+#> It's recommended to set non-random
+#> split probabilities to less than 1,
+#> or to use the extended model (ndim >
+#> 1).
 #> ℹ Computing anomaly scores...
 #> ✔ Detected 4 outliers (12.5% of data)
 #> ✔ Outlier detection complete!
 ```
 
 ### 3. Different tuning methods
+
 
 ``` r
 # Grid Search (default, systematic but slower)
@@ -249,6 +317,7 @@ result_bayes <- detect_outliers(mtcars, tune_method = "bayesian")
 ```
 
 ### 4. With categorical variables
+
 
 ``` r
 # Automatic one-hot encoding of factors
@@ -277,6 +346,7 @@ result <- detect_outliers(data)
 
 ### 5. Detailed outlier analysis
 
+
 ``` r
 result <- detect_outliers(mtcars)
 #> ℹ Preprocessing data...
@@ -295,10 +365,11 @@ result <- detect_outliers(mtcars)
 # Which features are suspicious in row 31?
 detailed <- get_outlier_summary(result, detailed = TRUE)
 detailed[row_id == 31]
-#> Empty data.table (0 rows and 27 cols): row_id,anomaly_score,is_outlier,feat_score_mpg,feat_score_cyl,feat_score_disp...
+#> Error: object 'row_id' not found
 ```
 
 ## Performance
+
 
 ``` r
 # Benchmark on different data sizes
@@ -323,6 +394,7 @@ mark(detect_outliers(medium_data, tune = TRUE, tune_method = "random"))
 
 ### Custom Threshold
 
+
 ``` r
 result <- detect_outliers(mtcars, contamination = 0.05)
 
@@ -339,6 +411,7 @@ result$threshold <- custom_threshold
 
 ### Too many/few outliers
 
+
 ``` r
 # Adjust contamination parameter
 result <- detect_outliers(data, contamination = 0.05) # Fewer outliers
@@ -346,6 +419,7 @@ result <- detect_outliers(data, contamination = 0.15) # More outliers
 ```
 
 ### Poor separation
+
 
 ``` r
 # Use more trees
@@ -356,6 +430,7 @@ result <- detect_outliers(data, tune = TRUE, tune_method = "random")
 ```
 
 ### Memory issues with large data
+
 
 ``` r
 # Disable parallel processing
@@ -369,11 +444,11 @@ result <- detect_outliers(large_data, n_trees = 50, tune = FALSE)
 
 Contributions are welcome! Please:
 
-1.  Fork the repository
-2.  Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the branch (`git push origin feature/AmazingFeature`)
-5.  Open a pull request
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a pull request
 
 ## License
 
@@ -381,5 +456,5 @@ MIT License – see [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 
-- `isotree` package for the Isolation Forest implementation
-- R community for feedback and inspiration
+* `isotree` package for the Isolation Forest implementation
+* R community for feedback and inspiration
