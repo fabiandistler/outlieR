@@ -98,7 +98,7 @@ detect_outliers <- function(data,
   if (verbose) cli::cli_alert_info("Training isolation forest model...")
 
   # Train model
-  model <- isotree::isolation.forest(
+  model_args <- list(
     data = prep_data$processed,
     ntrees = params$ntrees,
     sample_size = params$sample_size,
@@ -110,6 +110,10 @@ detect_outliers <- function(data,
     prob_pick_full_gain = 1.0,
     prob_pick_dens = 0.0
   )
+
+  model_args <- model_args[!sapply(model_args, is.null)]
+
+  model <- do.call(isotree::isolation.forest, model_args)
 
   if (verbose) cli::cli_alert_info("Computing anomaly scores...")
 
@@ -205,37 +209,28 @@ print.outlier_detector <- function(x, ...) {
   n_outliers <- sum(x$outliers)
   pct_outliers <- round(100 * n_outliers / n_total, 2)
 
-  cli::cli_h1("Outlier Detection Results")
-  cli::cli_text("")
+  cat("\n=== Outlier Detection Results ===\n\n")
 
-  cli::cli_h2("Model Configuration")
-  cli::cli_ul()
-  cli::cli_li("Algorithm: Isolation Forest (isotree)")
-  cli::cli_li("Number of trees: {x$params$ntrees}")
-  cli::cli_li("Sample size: {x$params$sample_size %||% 'auto'}")
-  cli::cli_li("Max depth: {x$params$max_depth %||% 'auto'}")
-  cli::cli_end()
-  cli::cli_text("")
+  cat("Model Configuration:\n")
+  cat("  - Algorithm: Isolation Forest (isotree)\n")
+  cat("  - Number of trees:", x$params$ntrees, "\n")
+  cat("  - Sample size:", x$params$sample_size %||% "auto", "\n")
+  cat("  - Max depth:", x$params$max_depth %||% "auto", "\n\n")
 
-  cli::cli_h2("Detection Summary")
-  cli::cli_ul()
-  cli::cli_li("Total observations: {n_total}")
-  cli::cli_li("Outliers detected: {n_outliers} ({pct_outliers}%)")
-  cli::cli_li("Anomaly score threshold: {round(x$threshold, 4)}")
-  cli::cli_end()
-  cli::cli_text("")
+  cat("Detection Summary:\n")
+  cat("  - Total observations:", n_total, "\n")
+  cat("  - Outliers detected:", n_outliers, "(", pct_outliers, "%)\n")
+  cat("  - Anomaly score threshold:", round(x$threshold, 4), "\n\n")
 
-  cli::cli_h2("Performance Metrics")
-  cli::cli_ul()
+  cat("Performance Metrics:\n")
   for (metric_name in names(x$metrics)) {
     metric_value <- round(x$metrics[[metric_name]], 4)
-    cli::cli_li("{metric_name}: {metric_value}")
+    cat("  -", metric_name, ":", metric_value, "\n")
   }
-  cli::cli_end()
-  cli::cli_text("")
+  cat("\n")
 
-  cli::cli_text("Use {.fn plot} to visualize results")
-  cli::cli_text("Use {.fn get_outlier_summary} to see detailed outlier information")
+  cat("Use plot() to visualize results\n")
+  cat("Use get_outlier_summary() to see detailed outlier information\n")
 
   invisible(x)
 }
@@ -250,7 +245,7 @@ print.outlier_detector <- function(x, ...) {
 summary.outlier_detector <- function(object, ...) {
   print(object)
 
-  cli::cli_h2("Top 10 Outliers")
+  cat("\nTop 10 Outliers:\n")
   top_outliers <- get_outlier_summary(object, detailed = FALSE) %>%
     dplyr::slice_head(n = 10)
 

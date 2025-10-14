@@ -15,14 +15,16 @@ prepare_data <- function(data, target_cols = NULL) {
 
   # Select target columns
   if (is.null(target_cols)) {
-    # Use all numeric columns
-    numeric_cols <- names(dt)[sapply(dt, is.numeric)]
+    # Use all numeric and categorical columns
+    usable_cols <- names(dt)[sapply(dt, function(x) {
+      is.numeric(x) || is.character(x) || is.factor(x)
+    })]
 
-    if (length(numeric_cols) == 0) {
-      cli::cli_abort("No numeric columns found in data")
+    if (length(usable_cols) == 0) {
+      cli::cli_abort("No numeric or categorical columns found in data")
     }
 
-    target_cols <- numeric_cols
+    target_cols <- usable_cols
   } else {
     # Validate specified columns exist
     missing_cols <- setdiff(target_cols, names(dt))
@@ -76,8 +78,10 @@ prepare_data <- function(data, target_cols = NULL) {
   cols_with_missing <- names(missing_counts)[unlist(missing_counts) > 0]
 
   if (length(cols_with_missing) > 0) {
-    cli::cli_alert_warning(
-      "Found missing values in {length(cols_with_missing)} column{?s}. Imputing with median."
+    warning(
+      "Found missing values in ", length(cols_with_missing),
+      " column(s). Imputing with median.",
+      call. = FALSE
     )
 
     for (col in cols_with_missing) {
@@ -199,7 +203,7 @@ generate_outlier_details <- function(data, prep_data, scores, outliers,
 
       # Calculate z-scores for each feature
       feature_scores <- sapply(feature_names, function(feat) {
-        obs_val <- dt_processed[idx, get(feat)]
+        obs_val <- dt_processed[[feat]][idx]
         med <- feature_stats[[feat]]$median
         mad_val <- feature_stats[[feat]]$mad
 

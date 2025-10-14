@@ -190,17 +190,22 @@ evaluate_params <- function(data, params, contamination) {
   tryCatch(
     {
       # Train model with given parameters
-      model <- isotree::isolation.forest(
+      model_args <- list(
         data = data,
         ntrees = params$ntrees,
         sample_size = params$sample_size,
         max_depth = params$max_depth,
         ndim = params$ndim,
+        ntry = params$ntry,
         prob_pick_pooled_gain = 0.0,
         prob_pick_avg_gain = 0.0,
         prob_pick_full_gain = 1.0,
         prob_pick_dens = 0.0
       )
+
+      model_args <- model_args[!sapply(model_args, is.null)]
+
+      model <- do.call(isotree::isolation.forest, model_args)
 
       # Predict anomaly scores
       scores <- predict(model, data, type = "avg_depth")
@@ -278,7 +283,7 @@ calculate_metrics <- function(scores, outliers, contamination) {
     pooled_sd <- sqrt((var(outlier_scores, na.rm = TRUE) +
       var(normal_scores, na.rm = TRUE)) / 2)
 
-    metrics$cohens_d <- if (pooled_sd > 0) mean_diff / pooled_sd else NA
+    metrics$cohens_d <- if (!is.na(pooled_sd) && pooled_sd > 0) mean_diff / pooled_sd else NA
 
     # Silhouette-like score for outliers
     metrics$outlier_separation <- mean_diff / (metrics$sd_score + 1e-10)
