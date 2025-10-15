@@ -334,7 +334,7 @@ result <- detect_outliers(mtcars, verbose = FALSE, parallel = FALSE)
 # Score statistics
 cat("Score range:", range(result$scores), "\n")
 cat("Score mean:", mean(result$scores), "\n")
-cat("Score SD:", sd(result$scores), "\n")
+cat("Score SD:", stats::sd(result$scores), "\n")
 cat("Threshold:", result$threshold, "\n")
 
 # View metrics

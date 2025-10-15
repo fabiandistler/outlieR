@@ -269,7 +269,7 @@ calculate_metrics <- function(scores, outliers, contamination) {
   metrics <- list(
     mean_score = mean(scores, na.rm = TRUE),
     median_score = stats::median(scores, na.rm = TRUE),
-    sd_score = sd(scores, na.rm = TRUE),
+    sd_score = stats::sd(scores, na.rm = TRUE),
     min_score = min(scores, na.rm = TRUE),
     max_score = max(scores, na.rm = TRUE)
   )
