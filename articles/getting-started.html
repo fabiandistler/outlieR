@@ -81,7 +81,7 @@
                         <h4 data-toc-skip class="author">Fabian
 Distler</h4>
             
-            <h4 data-toc-skip class="date">2025-10-14</h4>
+            <h4 data-toc-skip class="date">2025-10-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/fabiandistler/outlieR/blob/main/vignettes/getting-started.Rmd" class="external-link"><code>vignettes/getting-started.Rmd</code></a></small>
       <div class="hidden name"><code>getting-started.Rmd</code></div>
@@ -765,25 +765,25 @@ easy to find outliers:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model Configuration:</span></span>
 <span><span class="co">#&gt;   - Algorithm: Isolation Forest (isotree)</span></span>
-<span><span class="co">#&gt;   - Number of trees: 100 </span></span>
+<span><span class="co">#&gt;   - Number of trees: 300 </span></span>
 <span><span class="co">#&gt;   - Sample size: 32 </span></span>
 <span><span class="co">#&gt;   - Max depth: auto </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Detection Summary:</span></span>
 <span><span class="co">#&gt;   - Total observations: 32 </span></span>
 <span><span class="co">#&gt;   - Outliers detected: 4 ( 12.5 %)</span></span>
-<span><span class="co">#&gt;   - Anomaly score threshold: 7.728 </span></span>
+<span><span class="co">#&gt;   - Anomaly score threshold: 0.5691 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Performance Metrics:</span></span>
-<span><span class="co">#&gt;   - mean_score : 6.5943 </span></span>
-<span><span class="co">#&gt;   - median_score : 6.9318 </span></span>
-<span><span class="co">#&gt;   - sd_score : 1.1581 </span></span>
-<span><span class="co">#&gt;   - min_score : 4.2544 </span></span>
-<span><span class="co">#&gt;   - max_score : 7.9675 </span></span>
-<span><span class="co">#&gt;   - mean_outlier_score : 7.8678 </span></span>
-<span><span class="co">#&gt;   - mean_normal_score : 6.4124 </span></span>
-<span><span class="co">#&gt;   - cohens_d : 1.8233 </span></span>
-<span><span class="co">#&gt;   - outlier_separation : 1.2567 </span></span>
+<span><span class="co">#&gt;   - mean_score : 0.4795 </span></span>
+<span><span class="co">#&gt;   - median_score : 0.4564 </span></span>
+<span><span class="co">#&gt;   - sd_score : 0.0617 </span></span>
+<span><span class="co">#&gt;   - min_score : 0.405 </span></span>
+<span><span class="co">#&gt;   - max_score : 0.6327 </span></span>
+<span><span class="co">#&gt;   - mean_outlier_score : 0.5898 </span></span>
+<span><span class="co">#&gt;   - mean_normal_score : 0.4637 </span></span>
+<span><span class="co">#&gt;   - cohens_d : 3.2198 </span></span>
+<span><span class="co">#&gt;   - outlier_separation : 2.0432 </span></span>
 <span><span class="co">#&gt;   - detection_rate : 0.125 </span></span>
 <span><span class="co">#&gt;   - expected_contamination : 0.1 </span></span>
 <span><span class="co">#&gt;   - actual_contamination : 0.125 </span></span>
@@ -800,39 +800,39 @@ easy to find outliers:</p>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">summary_dt</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    row_id anomaly_score n_outlier_features</span></span>
 <span><span class="co">#&gt;     &lt;int&gt;         &lt;num&gt;              &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1:     23      7.967466                  0</span></span>
-<span><span class="co">#&gt; 2:     14      7.893872                  0</span></span>
-<span><span class="co">#&gt; 3:     12      7.880798                  0</span></span>
-<span><span class="co">#&gt; 4:      5      7.729028                  0</span></span>
+<span><span class="co">#&gt; 1:     19     0.6327487                  0</span></span>
+<span><span class="co">#&gt; 2:     27     0.5829330                  0</span></span>
+<span><span class="co">#&gt; 3:     30     0.5733040                  0</span></span>
+<span><span class="co">#&gt; 4:     28     0.5701941                  0</span></span>
 <span></span>
 <span><span class="co"># Detailed information with feature scores</span></span>
 <span><span class="va">detailed_dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_outlier_summary.html">get_outlier_summary</a></span><span class="op">(</span><span class="va">result</span>, detailed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">detailed_dt</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co">#&gt;    row_id anomaly_score is_outlier feat_score_mpg feat_score_cyl</span></span>
 <span><span class="co">#&gt;     &lt;int&gt;         &lt;num&gt;     &lt;lgcl&gt;          &lt;num&gt;          &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:     23      7.967466       TRUE      0.7391680      0.6744908</span></span>
-<span><span class="co">#&gt; 2:     14      7.893872       TRUE      0.7391680      0.6744908</span></span>
-<span><span class="co">#&gt; 3:     12      7.880798       TRUE      0.5174176      0.6744908</span></span>
+<span><span class="co">#&gt; 1:     19     0.6327487       TRUE     2.06967028      0.6744908</span></span>
+<span><span class="co">#&gt; 2:     27     0.5829330       TRUE     1.25658552      0.6744908</span></span>
+<span><span class="co">#&gt; 3:     30     0.5733040       TRUE     0.09239599      0.0000000</span></span>
 <span><span class="co">#&gt;    feat_score_disp feat_score_hp feat_score_drat feat_score_wt feat_score_qsec</span></span>
 <span><span class="co">#&gt;              &lt;num&gt;         &lt;num&gt;           &lt;num&gt;         &lt;num&gt;           &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:       0.7666771     0.3502164       0.7738894     0.1433700       0.2895719</span></span>
-<span><span class="co">#&gt; 2:       0.5659316     0.7393456       0.8874878     0.5930305       0.2048192</span></span>
-<span><span class="co">#&gt; 3:       0.5659316     0.7393456       0.8874878     0.9710060       0.2189446</span></span>
+<span><span class="co">#&gt; 1:       0.8585075     0.9209393       1.7536760     2.2287521       0.5720812</span></span>
+<span><span class="co">#&gt; 2:       0.5410163     0.4150712       1.0436857     1.5444861       0.7133358</span></span>
+<span><span class="co">#&gt; 3:       0.3651860     0.6744908       0.1064985     0.7233669       1.5608634</span></span>
 <span><span class="co">#&gt;    feat_score_vs feat_score_am feat_score_gear feat_score_carb</span></span>
 <span><span class="co">#&gt;            &lt;num&gt;         &lt;num&gt;           &lt;num&gt;           &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:             0             0       0.6744908       0.0000000</span></span>
-<span><span class="co">#&gt; 2:             0             0       0.6744908       0.6744908</span></span>
-<span><span class="co">#&gt; 3:             0             0       0.6744908       0.6744908</span></span>
+<span><span class="co">#&gt; 1:             0             0       0.0000000        0.000000</span></span>
+<span><span class="co">#&gt; 2:             0             0       0.6744908        0.000000</span></span>
+<span><span class="co">#&gt; 3:             0             0       0.6744908        2.697963</span></span>
 <span><span class="co">#&gt;    n_outlier_features top_outlier_features   mpg   cyl  disp    hp  drat    wt</span></span>
 <span><span class="co">#&gt;                 &lt;int&gt;               &lt;char&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:                  0      drat, disp, mpg  15.2     8 304.0   150  3.15 3.435</span></span>
-<span><span class="co">#&gt; 2:                  0        drat, hp, mpg  15.2     8 275.8   180  3.07 3.780</span></span>
-<span><span class="co">#&gt; 3:                  0         wt, drat, hp  16.4     8 275.8   180  3.07 4.070</span></span>
+<span><span class="co">#&gt; 1:                  0        wt, mpg, drat  30.4     4  75.7    52  4.93 1.615</span></span>
+<span><span class="co">#&gt; 2:                  0        wt, mpg, drat  26.0     4 120.3    91  4.43 2.140</span></span>
+<span><span class="co">#&gt; 3:                  0       carb, qsec, wt  19.7     6 145.0   175  3.62 2.770</span></span>
 <span><span class="co">#&gt;     qsec    vs    am  gear  carb</span></span>
 <span><span class="co">#&gt;    &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt; &lt;num&gt;</span></span>
-<span><span class="co">#&gt; 1:  17.3     0     0     3     2</span></span>
-<span><span class="co">#&gt; 2:  18.0     0     0     3     3</span></span>
-<span><span class="co">#&gt; 3:  17.4     0     0     3     3</span></span></code></pre></div>
+<span><span class="co">#&gt; 1: 18.52     1     1     4     2</span></span>
+<span><span class="co">#&gt; 2: 16.70     0     1     5     2</span></span>
+<span><span class="co">#&gt; 3: 15.50     0     1     5     6</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="visualizations">Visualizations<a class="anchor" aria-label="anchor" href="#visualizations"></a>
@@ -1732,6 +1732,11 @@ one-hot encoding:</p>
 <span><span class="co">#&gt; 500, : Split type probabilities sum to more than 1, will standardize them</span></span>
 <span><span class="co">#&gt; Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =</span></span>
 <span><span class="co">#&gt; 500, : Split type probabilities sum to more than 1, will standardize them</span></span>
+<span><span class="co">#&gt; Warning in (function (data, sample_size = min(nrow(data), 10000L), ntrees =</span></span>
+<span><span class="co">#&gt; 500, : Passed parameters for deterministic single-variable splits with no</span></span>
+<span><span class="co">#&gt; sub-sampling. Every tree fitted will end up doing exactly the same splits. It's</span></span>
+<span><span class="co">#&gt; recommended to set non-random split probabilities to less than 1, or to use the</span></span>
+<span><span class="co">#&gt; extended model (ndim &gt; 1).</span></span>
 <span></span>
 <span><span class="co"># Display preprocessing information</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Original columns:"</span>, <span class="va">result_mixed</span><span class="op">$</span><span class="va">preprocessing</span><span class="op">$</span><span class="va">original_cols</span>, <span class="st">"\n"</span><span class="op">)</span></span>
@@ -2535,42 +2540,42 @@ one-hot encoding:</p>
 <span></span>
 <span><span class="co"># Score statistics</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Score range:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Score range: 4.254368 7.967466</span></span>
+<span><span class="co">#&gt; Score range: 0.4050309 0.6327487</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Score mean:"</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Score mean: 6.594308</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Score SD:"</span>, <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Score SD: 1.158128</span></span>
+<span><span class="co">#&gt; Score mean: 0.4794962</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Score SD:"</span>, <span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">scores</span><span class="op">)</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Score SD: 0.06169555</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Threshold:"</span>, <span class="va">result</span><span class="op">$</span><span class="va">threshold</span>, <span class="st">"\n"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Threshold: 7.728002</span></span>
+<span><span class="co">#&gt; Threshold: 0.5691022</span></span>
 <span></span>
 <span><span class="co"># View metrics</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">result</span><span class="op">$</span><span class="va">metrics</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $mean_score</span></span>
-<span><span class="co">#&gt; [1] 6.594308</span></span>
+<span><span class="co">#&gt; [1] 0.4794962</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $median_score</span></span>
-<span><span class="co">#&gt; [1] 6.931768</span></span>
+<span><span class="co">#&gt; [1] 0.4564028</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $sd_score</span></span>
-<span><span class="co">#&gt; [1] 1.158128</span></span>
+<span><span class="co">#&gt; [1] 0.06169555</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $min_score</span></span>
-<span><span class="co">#&gt; [1] 4.254368</span></span>
+<span><span class="co">#&gt; [1] 0.4050309</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $max_score</span></span>
-<span><span class="co">#&gt; [1] 7.967466</span></span>
+<span><span class="co">#&gt; [1] 0.6327487</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $mean_outlier_score</span></span>
-<span><span class="co">#&gt; [1] 7.867791</span></span>
+<span><span class="co">#&gt; [1] 0.589795</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $mean_normal_score</span></span>
-<span><span class="co">#&gt; [1] 6.412382</span></span>
+<span><span class="co">#&gt; [1] 0.4637392</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $cohens_d</span></span>
-<span><span class="co">#&gt; [1] 1.823337</span></span>
+<span><span class="co">#&gt; [1] 3.219806</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $outlier_separation</span></span>
-<span><span class="co">#&gt; [1] 1.256691</span></span>
+<span><span class="co">#&gt; [1] 2.04319</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $detection_rate</span></span>
 <span><span class="co">#&gt; [1] 0.125</span></span>
