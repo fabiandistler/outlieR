@@ -118,7 +118,7 @@ detect_outliers <- function(data,
   if (verbose) cli::cli_alert_info("Computing anomaly scores...")
 
   # Predict anomaly scores
-  scores <- stats::predict(model, prep_data$processed, type = "avg_depth")
+  scores <- stats::predict(model, prep_data$processed, type = "score")
 
   # Determine threshold based on contamination
   threshold <- stats::quantile(scores, probs = 1 - contamination, na.rm = TRUE)

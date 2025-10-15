@@ -212,7 +212,7 @@ evaluate_params <- function(data, params, contamination) {
       model <- do.call(isotree::isolation.forest, model_args)
 
       # Predict anomaly scores
-      scores <- stats::predict(model, data, type = "avg_depth")
+      scores <- stats::predict(model, data, type = "score")
 
       # Calculate quality metrics
       threshold <- stats::quantile(scores, probs = 1 - contamination, na.rm = TRUE)
