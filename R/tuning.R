@@ -59,7 +59,7 @@ tune_grid_search <- function(data, param_space, contamination, parallel, verbose
   if (parallel && requireNamespace("parallel", quietly = TRUE)) {
     n_cores <- get_n_cores(nrow(grid))
     cl <- parallel::makeCluster(n_cores)
-    on.exit(parallel::stopCluster(cl))
+    on.exit(parallel::stopCluster(cl), add = TRUE)
 
     parallel::clusterExport(
       cl,
@@ -243,6 +243,7 @@ evaluate_params <- function(data, params, contamination) {
           (score_variance / (mean(scores, na.rm = TRUE)^2 + 1e-10)) * 0.2
       } else {
         quality_score <- 0
+        cohens_d <- NA
       }
 
       list(
