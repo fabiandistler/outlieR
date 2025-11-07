@@ -29,25 +29,20 @@
 #'   \item{data}{Original data (optionally stored)}
 #'
 #' @examples
-#' \dontrun{
-#' library(outlieR)
+#' # Basic usage without tuning (fast)
+#' result <- detect_outliers(mtcars, tune = FALSE, verbose = FALSE)
+#' summary(result)
 #'
-#' # Basic usage
+#' \donttest{
+#' # With automatic tuning
 #' result <- detect_outliers(mtcars)
 #'
 #' # With specific columns and custom contamination
 #' result <- detect_outliers(
 #'   data = iris,
 #'   target_cols = c("Sepal.Length", "Sepal.Width"),
-#'   contamination = 0.05
-#' )
-#'
-#' # Without automatic tuning
-#' result <- detect_outliers(
-#'   data = mtcars,
-#'   tune = FALSE,
-#'   n_trees = 200,
-#'   max_depth = 10
+#'   contamination = 0.05,
+#'   tune = FALSE
 #' )
 #' }
 #'
@@ -178,11 +173,9 @@ detect_outliers <- function(data,
 #' @return A data.table with outlier information
 #'
 #' @examples
-#' \dontrun{
-#' result <- detect_outliers(mtcars)
+#' result <- detect_outliers(mtcars, tune = FALSE, verbose = FALSE)
 #' summary <- get_outlier_summary(result)
 #' print(summary)
-#' }
 #'
 #' @export
 get_outlier_summary <- function(x, detailed = TRUE) {
