@@ -12,6 +12,7 @@
 #'
 #' @return List of optimal hyperparameters
 #' @keywords internal
+#' @noRd
 tune_parameters <- function(data,
                             method = c("grid", "random", "bayesian"),
                             contamination = 0.1,
@@ -48,6 +49,7 @@ tune_parameters <- function(data,
 #' Grid Search for Hyperparameter Tuning
 #'
 #' @keywords internal
+#' @noRd
 tune_grid_search <- function(data, param_space, contamination, parallel, verbose) {
   grid <- do.call(data.table::CJ, param_space)
 
@@ -106,6 +108,7 @@ tune_grid_search <- function(data, param_space, contamination, parallel, verbose
 #' Random Search for Hyperparameter Tuning
 #'
 #' @keywords internal
+#' @noRd
 tune_random_search <- function(data, param_space, contamination, parallel, verbose) {
   n_iterations <- 20
 
@@ -175,6 +178,7 @@ tune_random_search <- function(data, param_space, contamination, parallel, verbo
 #' Bayesian Optimization for Hyperparameter Tuning
 #'
 #' @keywords internal
+#' @noRd
 tune_bayesian_optimization <- function(data, param_space, contamination, parallel, verbose) {
   # For simplicity, fall back to random search
   # Full Bayesian optimization would require additional dependencies
@@ -193,6 +197,7 @@ tune_bayesian_optimization <- function(data, param_space, contamination, paralle
 #' cross-validation and anomaly score statistics.
 #'
 #' @keywords internal
+#' @noRd
 evaluate_params <- function(data, params, contamination) {
   tryCatch(
     {
@@ -265,6 +270,7 @@ evaluate_params <- function(data, params, contamination) {
 #' Calculate various metrics to assess outlier detection quality.
 #'
 #' @keywords internal
+#' @noRd
 calculate_metrics <- function(scores, outliers, contamination) {
   # Basic statistics
   metrics <- list(

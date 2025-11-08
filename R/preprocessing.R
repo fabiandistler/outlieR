@@ -9,6 +9,7 @@
 #'
 #' @return List with processed data and preprocessing info
 #' @keywords internal
+#' @noRd
 prepare_data <- function(data, target_cols = NULL) {
   dt <- data.table::as.data.table(data)
 
@@ -116,6 +117,7 @@ prepare_data <- function(data, target_cols = NULL) {
 #' Internal function to validate input parameters.
 #'
 #' @keywords internal
+#' @noRd
 validate_inputs <- function(data, target_cols, contamination) {
   # Check data
   if (!is.data.frame(data) && !data.table::is.data.table(data)) {
@@ -156,6 +158,7 @@ validate_inputs <- function(data, target_cols, contamination) {
 #' to each observation being classified as an outlier.
 #'
 #' @keywords internal
+#' @noRd
 generate_outlier_details <- function(data, prep_data, scores, outliers,
                                      model, threshold) {
   # Calculate per-feature contributions using feature importance proxy

@@ -1,0 +1,12 @@
+citHeader("To cite outlieR in publications use:")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "outlieR: Automatic Outlier Detection Using Isolation Forests",
+  author   = person("Fabian", "Distler", email = "bully-jolt-cabana@duck.com"),
+  year     = "2025",
+  note     = "R package version 0.1.0",
+  url      = "https://github.com/fabiandistler/outlieR"
+)
+
+citFooter("Thank you for using outlieR!")

@@ -1,3 +1,11 @@
+# Declare global variables for R CMD check (data.table NSE)
+utils::globalVariables(c(
+  "is_outlier", "anomaly_score", "row_id", "n_outlier_features",
+  "top_outlier_features", "feature", "score", "PC1", "PC2",
+  "mean_score", ".N"
+))
+
+
 #' Get Number of Cores for Parallel Processing
 #'
 #' @description
@@ -8,6 +16,7 @@
 #'
 #' @return Integer number of cores to use
 #' @keywords internal
+#' @noRd
 get_n_cores <- function(max_tasks) {
   chk <- tolower(Sys.getenv("_R_CHECK_LIMIT_CORES_", ""))
   if (nzchar(chk) && chk == "true") {

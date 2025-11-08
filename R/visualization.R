@@ -11,12 +11,12 @@
 #' @return A ggplot2 object or list of plots (if type = "all")
 #'
 #' @examples
-#' \dontrun{
-#' result <- detect_outliers(mtcars)
+#' result <- detect_outliers(mtcars, tune = FALSE, verbose = FALSE)
 #'
 #' # Score distribution plot
 #' plot(result, type = "score")
 #'
+#' \donttest{
 #' # Feature importance for outliers
 #' plot(result, type = "features")
 #'
@@ -59,6 +59,7 @@ plot.outlier_detector <- function(x,
 #' Plot Anomaly Score Distribution
 #'
 #' @keywords internal
+#' @noRd
 plot_score_distribution <- function(x, n_top = 10) {
   dt <- data.table::data.table(
     row_id = seq_along(x$scores),
@@ -114,6 +115,7 @@ plot_score_distribution <- function(x, n_top = 10) {
 #' Plot Feature Importance for Outliers
 #'
 #' @keywords internal
+#' @noRd
 plot_feature_importance <- function(x, n_top = 10) {
   dt <- data.table::as.data.table(x$outlier_details)
 
@@ -183,6 +185,7 @@ plot_feature_importance <- function(x, n_top = 10) {
 #' Plot Outlier Distribution
 #'
 #' @keywords internal
+#' @noRd
 plot_outlier_distribution <- function(x) {
   dt <- data.table::data.table(
     score = x$scores,
@@ -219,6 +222,7 @@ plot_outlier_distribution <- function(x) {
 #' Plot PCA Projection with Outliers
 #'
 #' @keywords internal
+#' @noRd
 plot_pca_outliers <- function(x, n_top = 10) {
   if (is.null(x$data)) {
     return(
@@ -325,6 +329,7 @@ plot_pca_outliers <- function(x, n_top = 10) {
 #' Plot Outlier Heatmap
 #'
 #' @keywords internal
+#' @noRd
 plot_outlier_heatmap <- function(x, n_top = 10) {
   dt <- data.table::as.data.table(x$outlier_details)
 
