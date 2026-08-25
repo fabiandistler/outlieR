@@ -10,3 +10,5 @@
 ^Meta$
 ^\.github$
 ^codecov\.yml$
+^ROOMBA\.md$
+^\.roomba$
